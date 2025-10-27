@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {AmqpConnection} from "@golevelup/nestjs-rabbitmq";
 
 @Injectable()
@@ -10,6 +10,6 @@ export class RabbitmqService {
     }
 
     async test() {
-        await this.amqpConnection.publish('', 'to_aggregator', {test:5});
+        await this.amqpConnection.publish('', 'to_aggregator', {test: 5});
     }
 }
