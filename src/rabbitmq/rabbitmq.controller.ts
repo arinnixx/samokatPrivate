@@ -49,6 +49,7 @@ export class RabbitmqController {
 
   async handleMessage(payload: any) {
     const service = this.config[payload.name];
+    console.log(payload);
     if (service) {
       switch (payload.method) {
         case 'POST':
@@ -59,6 +60,9 @@ export class RabbitmqController {
           break;
         case 'DELETE':
           service.remove(payload.id);
+          break;
+        default :
+          console.error("нет такого метода....",payload);
           break;
       }
     }

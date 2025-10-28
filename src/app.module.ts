@@ -91,7 +91,7 @@ import { AggregatorService } from './aggregator/aggregator.service';
         //     // provide: APP_GUARD,
         //     useClass: AuthGuard,
         // },
-        AppService, RabbitmqController, RabbitmqService,TransportTypesService,TransportService,RequestLogsService,OrdersService,EmployeeAggregatorService,EmployeeService,DeliveryStatusHistoryService,DeliveryStatusService,DeliveryJacketsService,DeliveryBagsService,AggregatorService
+        AppService, RabbitmqController, RabbitmqService
 
     ],
 })
