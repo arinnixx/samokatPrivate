@@ -10,6 +10,7 @@ import {RequestLog} from "../entities/RequestLogs";
     ],
     controllers: [RequestLogsController],
     providers: [RequestLogsService],
+    exports: [RequestLogsService],
 })
 export class RequestLogsModule {
 }

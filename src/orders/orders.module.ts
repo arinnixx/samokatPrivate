@@ -12,6 +12,7 @@ import {DeliveryStatusHistory} from "../entities/deliveryStatusHistory";
     ],
     controllers: [OrdersController],
     providers: [OrdersService, DeliveryStatusHistoryService],
+    exports: [OrdersService],
 })
 export class OrdersModule {
 }

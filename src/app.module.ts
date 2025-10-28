@@ -20,6 +20,17 @@ import {AuthGuard} from "./guard/auth.guard";
 import {RabbitMQModule} from "@golevelup/nestjs-rabbitmq";
 import {RabbitmqController} from "./rabbitmq/rabbitmq.controller";
 import {RabbitmqService} from "./rabbitmq/rabbitmq.service";
+import { TransportTypesService } from './transport-types/transport-types.service';
+import { TransportService } from './transport/transport.service';
+import { RequestLogsService } from './request-logs/request-logs.service';
+import { OrdersService } from './orders/orders.service';
+import { EmployeeAggregatorService } from './employee-aggregator/employee-aggregator.service';
+import { EmployeeService } from './employee/employee.service';
+import { DeliveryStatusHistoryService } from './delivery-status-history/delivery-status-history.service';
+import { DeliveryStatusService } from './delivery-status/delivery-status.service';
+import { DeliveryJacketsService } from './delivery-jackets/delivery-jackets.service';
+import { DeliveryBagsService } from './delivery-bags/delivery-bags.service';
+import { AggregatorService } from './aggregator/aggregator.service';
 
 @Module({
     imports: [
@@ -80,7 +91,7 @@ import {RabbitmqService} from "./rabbitmq/rabbitmq.service";
         //     // provide: APP_GUARD,
         //     useClass: AuthGuard,
         // },
-        AppService, RabbitmqController, RabbitmqService
+        AppService, RabbitmqController, RabbitmqService,TransportTypesService,TransportService,RequestLogsService,OrdersService,EmployeeAggregatorService,EmployeeService,DeliveryStatusHistoryService,DeliveryStatusService,DeliveryJacketsService,DeliveryBagsService,AggregatorService
 
     ],
 })

@@ -10,6 +10,7 @@ import {EmployeeAggregator} from "../entities/EmployeeAggregator";
     ],
     controllers: [EmployeeAggregatorController],
     providers: [EmployeeAggregatorService],
+    exports: [EmployeeAggregatorService],
 })
 export class EmployeeAggregatorModule {
 }

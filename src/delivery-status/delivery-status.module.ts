@@ -10,6 +10,7 @@ import {DeliveryStatus} from "../entities/DeliveryStatus";
     ],
     controllers: [DeliveryStatusController],
     providers: [DeliveryStatusService],
+    exports: [DeliveryStatusService],
 })
 export class DeliveryStatusModule {
 }

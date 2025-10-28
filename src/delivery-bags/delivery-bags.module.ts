@@ -11,6 +11,7 @@ import {Aggregator} from "../entities/Aggregator";
     ],
     controllers: [DeliveryBagsController],
     providers: [DeliveryBagsService],
+    exports: [DeliveryBagsService],
 })
 export class DeliveryBagsModule {
 }

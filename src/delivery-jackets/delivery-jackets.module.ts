@@ -10,6 +10,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
     ],
     controllers: [DeliveryJacketsController],
     providers: [DeliveryJacketsService],
+    exports:[DeliveryJacketsService],
 })
 export class DeliveryJacketsModule {
 }

@@ -10,6 +10,7 @@ import {TransportType} from "../entities/TransportTypes";
     ],
     controllers: [TransportTypesController],
     providers: [TransportTypesService],
+    exports: [TransportTypesService],
 })
 export class TransportTypesModule {
 }
