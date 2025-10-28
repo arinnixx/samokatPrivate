@@ -76,10 +76,10 @@ import {RabbitmqService} from "./rabbitmq/rabbitmq.service";
     ],
     controllers: [AppController],
     providers: [
-        {
-            provide: APP_GUARD,
-            useClass: AuthGuard,
-        },
+        // {
+        //     // provide: APP_GUARD,
+        //     useClass: AuthGuard,
+        // },
         AppService, RabbitmqController, RabbitmqService
 
     ],
