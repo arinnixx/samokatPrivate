@@ -10,7 +10,7 @@ export class BasePrivateService<TEntity extends BaseEntity> extends BaseService<
     constructor(
         protected readonly repo: Repository<TEntity>,
         protected readonly dataSource: DataSource,
-        private readonly rmqService: RabbitmqService,
+        protected readonly rmqService: RabbitmqService,
     ) {
         super(repo, dataSource);
     }

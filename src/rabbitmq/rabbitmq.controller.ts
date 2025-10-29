@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import { Controller, Injectable } from '@nestjs/common';
 import {RabbitSubscribe} from "@golevelup/nestjs-rabbitmq";
 import { config } from '../utils';
 import { TransportTypesService } from '../transport-types/transport-types.service';
@@ -13,6 +13,7 @@ import { DeliveryJacketsService } from '../delivery-jackets/delivery-jackets.ser
 import { DeliveryBagsService } from '../delivery-bags/delivery-bags.service';
 import { AggregatorService } from '../aggregator/aggregator.service';
 
+@Controller()
 @Injectable()
 export class RabbitmqController {
   config = {};

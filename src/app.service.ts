@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import {AmqpConnection} from "@golevelup/nestjs-rabbitmq";
 
 @Injectable()
 export class AppService {
-  constructor(
-      private readonly rabbitMQService: AmqpConnection,
-  ) {
-  }
+    constructor() {
+    }
 
 
-  getHello(): string {
-    return 'Hello World!';
-  }
+    getHello(): string {
+        return 'Hello World!';
+    }
 }

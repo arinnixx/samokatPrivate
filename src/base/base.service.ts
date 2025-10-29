@@ -128,35 +128,22 @@ export class BaseService<TEntity extends BaseEntity> {
             repo = manager.withRepository(this.repo);
         }
         repo ??= this.repo;
-        const repoEntity: TEntity = await this.createEntity(data, repo);
-        return repoEntity.id;
-    }
-
-    @SafeLog()
-    private async createEntity(data: DeepPartial<TEntity>, {
-        repo,
-        manager,
-    }: Repositories<TEntity> = {}) {
-        if (manager) {
-            repo = manager.withRepository(this.repo);
-        }
-        repo ??= this.repo;
         const repoEntity: TEntity = repo.create(data);
         await repo.save(repoEntity);
-        return repoEntity;
+        return repoEntity.id;
     }
 
     public async updateBy(where: FindOptionsWhere<TEntity> | any, data: DeepPartial<TEntity>, checkField: DeepPartial<TEntity> = null) {
         const repoEntity: TEntity = await this.findOneBy(where);
         await this.wrapperTransaction(async (repo) => {
             // @ts-ignore
-            await this.updateEntity(repoEntity.id, data, {repo});
+            await this.updateItem(repoEntity.id, data, {repo});
         });
         return true;
     }
 
     @SafeLog()
-    async updateEntity(id: number, data: DeepPartial<TEntity> = null, {
+    async updateItem(id: number, data: DeepPartial<TEntity> = null, {
         repo,
         manager,
     }: Repositories<TEntity> = {}) {

@@ -13,13 +13,51 @@ import { DeliveryStatusService } from '../delivery-status/delivery-status.servic
 import { DeliveryJacketsService } from '../delivery-jackets/delivery-jackets.service';
 import { DeliveryBagsService } from '../delivery-bags/delivery-bags.service';
 import { AggregatorService } from '../aggregator/aggregator.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TransportType } from '../entities/TransportTypes';
+import { Transport } from '../entities/Transport';
+import { EmployeeAggregator } from '../entities/EmployeeAggregator';
+import { Order } from '../entities/Orders';
+import { Employee } from '../entities/Employee';
+import { DeliveryStatusHistory } from '../entities/deliveryStatusHistory';
+import { DeliveryStatus } from '../entities/DeliveryStatus';
+import { DeliveryJackets } from '../entities/DeliveryJackets';
+import { DeliveryBags } from '../entities/DeliveryBags';
+import { Aggregator } from '../entities/Aggregator';
+import { RequestLog } from '../entities/RequestLogs';
 
 @Module({
     imports: [
         RabbitmqModule,
+        TypeOrmModule.forFeature([
+            TransportType,
+            Transport,
+            Order,
+            EmployeeAggregator,
+            Employee,
+            DeliveryStatus,
+            DeliveryStatusHistory,
+            DeliveryJackets,
+            DeliveryBags,
+            Aggregator,
+            RequestLog,
+        ]),
     ],
     controllers: [RabbitmqController],
-    providers: [RabbitmqService,TransportTypesService,TransportService,RequestLogsService,OrdersService,EmployeeAggregatorService,EmployeeService,DeliveryStatusHistoryService,DeliveryStatusService,DeliveryJacketsService,DeliveryBagsService,AggregatorService,],
+    providers: [
+        RabbitmqService,
+        TransportTypesService,
+        TransportService,
+        RequestLogsService,
+        OrdersService,
+        EmployeeAggregatorService,
+        EmployeeService,
+        DeliveryStatusHistoryService,
+        DeliveryStatusService,
+        DeliveryJacketsService,
+        DeliveryBagsService,
+        AggregatorService,
+    ],
     exports: [RabbitmqService],
 })
 export class RabbitmqShareModule {
