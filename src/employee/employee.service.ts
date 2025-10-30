@@ -7,6 +7,7 @@ import { Aggregator } from '../entities/Aggregator';
 
 @Injectable()
 export class EmployeeService extends BaseService<Employee> {
+    name = "employee"
     constructor(
         @InjectRepository(Employee) repo: Repository<Employee>,
         dataSource: DataSource,

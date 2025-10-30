@@ -7,6 +7,7 @@ import { DeliveryStatusHistoryService } from '../delivery-status-history/deliver
 
 @Injectable()
 export class OrdersService extends BaseService<Order> {
+    name="orders"
     constructor(
         @InjectRepository(Order) repo: Repository<Order>,
         dataSource: DataSource,

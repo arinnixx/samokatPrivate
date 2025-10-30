@@ -6,6 +6,7 @@ import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
 export class EmployeeAggregatorService extends BaseService<EmployeeAggregator> {
+    name = "employee-aggregator";
     constructor(
         @InjectRepository(EmployeeAggregator) repo: Repository<EmployeeAggregator>,
         dataSource: DataSource,

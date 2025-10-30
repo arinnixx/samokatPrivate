@@ -19,7 +19,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
                 channels: {
                     default: {
                         default: true,
-                        prefetchCount: 1,
+                        prefetchCount: 10,
                     },
                 },
                 uri: `amqp://${process.env.RMQ_USER}:${process.env.RMQ_PASSWORD}@${process.env.RMQ_URL}`,
