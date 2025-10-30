@@ -1,11 +1,9 @@
-import {CanActivate, ExecutionContext, Injectable, UnauthorizedException} from '@nestjs/common';
-import {AggregatorService} from "../aggregator/aggregator.service";
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class MainGuard implements CanActivate {
 
-    constructor(
-    ) {
+    constructor() {
     }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {

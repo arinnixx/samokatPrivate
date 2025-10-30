@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TransportType } from '../entities/TransportTypes';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, DeepPartial, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 import { BasePrivateService } from '../base/base-private.service';
 

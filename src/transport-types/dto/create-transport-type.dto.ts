@@ -1,5 +1,5 @@
-import {CreateHandbookDto} from "../../base/dto/base.dto";
-import {IsNotEmpty} from "class-validator";
+import { CreateHandbookDto } from '../../base/dto/base.dto';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateTransportTypeDto extends CreateHandbookDto {
 

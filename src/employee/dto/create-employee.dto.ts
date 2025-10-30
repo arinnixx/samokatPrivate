@@ -1,5 +1,5 @@
-import {CreateHandbookDto} from "../../base/dto/base.dto";
-import {IsEmail, IsNotEmpty, IsPhoneNumber, MaxLength} from "class-validator";
+import { CreateHandbookDto } from '../../base/dto/base.dto';
+import { IsEmail, IsNotEmpty, IsPhoneNumber, MaxLength } from 'class-validator';
 
 export class CreateEmployeeDto extends CreateHandbookDto {
     @IsNotEmpty()

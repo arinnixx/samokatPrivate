@@ -1,5 +1,5 @@
-import {ApiProperty} from '@nestjs/swagger';
-import {BaseEntity} from "./base.entity";
+import { ApiProperty } from '@nestjs/swagger';
+import { BaseEntity } from './base.entity';
 
 export class BaseResponseLoad<TEntity extends BaseEntity> {
     @ApiProperty()
@@ -21,6 +21,6 @@ export class BaseResponseMessage {
     @ApiProperty()
     message: string;
 
-    @ApiProperty({required: false})
+    @ApiProperty({ required: false })
     id?: number;
 }

@@ -1,8 +1,8 @@
-import {Injectable} from '@nestjs/common';
-import {BaseService} from "../base/base.service";
-import {DeliveryBags} from "../entities/DeliveryBags";
-import {InjectRepository} from "@nestjs/typeorm";
-import {DataSource, Repository} from "typeorm";
+import { Injectable } from '@nestjs/common';
+import { BaseService } from '../base/base.service';
+import { DeliveryBags } from '../entities/DeliveryBags';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
 export class DeliveryBagsService extends BaseService<DeliveryBags> {

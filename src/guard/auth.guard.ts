@@ -1,7 +1,7 @@
-import {CanActivate, ExecutionContext, Injectable, UnauthorizedException} from '@nestjs/common';
-import {AggregatorService} from "../aggregator/aggregator.service";
-import {Reflector} from "@nestjs/core";
-import {IS_ADMIN_CONTROLLER} from "../decorators/adminController";
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { AggregatorService } from '../aggregator/aggregator.service';
+import { Reflector } from '@nestjs/core';
+import { IS_ADMIN_CONTROLLER } from '../decorators/adminController';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
             if (bearer !== 'Bearer' || !token) {
                 throw new UnauthorizedException();
             }
-            const res = await this.aggregateService.getBy({token});
+            const res = await this.aggregateService.getBy({ token });
             if (!res) {
                 throw new UnauthorizedException();
             }

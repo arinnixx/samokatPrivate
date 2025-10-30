@@ -1,12 +1,12 @@
-import {Column, Entity} from 'typeorm';
-import {BaseEntity} from '../base/base.entity';
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from '../base/base.entity';
 
-@Entity({name: 'aggregator', comment: 'Агрегатор'})
+@Entity({ name: 'aggregator', comment: 'Агрегатор' })
 export class Aggregator extends BaseEntity {
 
-    @Column({comment: 'Название'})
+    @Column({ comment: 'Название' })
     name: string;
 
-    @Column({comment: 'Токен'})
+    @Column({ comment: 'Токен' })
     token: string;
 }

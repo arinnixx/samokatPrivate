@@ -1,19 +1,19 @@
-import {Column, Entity} from 'typeorm';
-import {BaseEntity} from '../base/base.entity';
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from '../base/base.entity';
 
-@Entity({name: 'employee', comment: 'Сотрудник'})
+@Entity({ name: 'employee', comment: 'Сотрудник' })
 export class Employee extends BaseEntity {
 
-    @Column({comment: 'ФИО'})
+    @Column({ comment: 'ФИО' })
     fio: string;
 
-    @Column({comment: 'Номер телефона'})
+    @Column({ comment: 'Номер телефона' })
     phone: string;
 
-    @Column({comment: 'Почта'})
+    @Column({ comment: 'Почта' })
     email: string;
 
-    @Column({comment: 'СНИЛС', nullable: true})
+    @Column({ comment: 'СНИЛС', nullable: true })
     snils: string;
     // @Column({ comment: 'Токен' })
     // token: string;

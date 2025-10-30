@@ -1,4 +1,4 @@
-import {CreateEmployeeDto} from './create-employee.dto';
+import { CreateEmployeeDto } from './create-employee.dto';
 
 export class UpdateEmployeeDto extends CreateEmployeeDto {
 }

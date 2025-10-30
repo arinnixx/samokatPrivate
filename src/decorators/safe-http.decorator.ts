@@ -1,4 +1,4 @@
-import {SetMetadata} from '@nestjs/common';
+import { SetMetadata } from '@nestjs/common';
 
 export const SafeHttp = () => SetMetadata('safe-http', true);
 export const SafeLog = () => {

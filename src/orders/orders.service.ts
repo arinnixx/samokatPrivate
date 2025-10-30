@@ -1,9 +1,9 @@
-import {Injectable} from '@nestjs/common';
-import {BaseService} from "../base/base.service";
-import {Order} from "../entities/Orders";
-import {InjectRepository} from "@nestjs/typeorm";
-import {DataSource, DeepPartial, Repository} from "typeorm";
-import {DeliveryStatusHistoryService} from "../delivery-status-history/delivery-status-history.service";
+import { Injectable } from '@nestjs/common';
+import { BaseService } from '../base/base.service';
+import { Order } from '../entities/Orders';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DataSource, DeepPartial, Repository } from 'typeorm';
+import { DeliveryStatusHistoryService } from '../delivery-status-history/delivery-status-history.service';
 
 @Injectable()
 export class OrdersService extends BaseService<Order> {
@@ -19,10 +19,10 @@ export class OrdersService extends BaseService<Order> {
         const item = await this.getBy(where, {}, ['status']);
         const res = await super.updateBy(where, data, checkField);
         if (data.status.id !== item.status.id) {
-            await this.deliveryStatusHistory.create({
+            await this.deliveryStatusHistory.createItem({
                 order: item,
                 status: data.status,
-            })
+            });
         }
         return res;
     }
