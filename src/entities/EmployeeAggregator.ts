@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Employee } from './Employee';
 import { Aggregator } from './Aggregator';
 import { BaseEntity } from '../base/base.entity';
@@ -22,4 +22,8 @@ export class EmployeeAggregator extends BaseEntity {
 
     @Column({ comment: 'Табельный номер' })
     personnel_number: string;
+    @BeforeInsert()
+    setStart_date() {
+        this.start_date = Math.floor(Date.now() / 1000);
+    }
 }

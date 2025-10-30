@@ -92,17 +92,16 @@ export class BaseService<TEntity extends BaseEntity> {
     ) {
     }
 
-    rebuildData({ aggregator, data }: { aggregator?: DeepPartial<Aggregator>, data?: DeepPartial<TEntity> }) {
-        const newDataAggregator = {};
+    rebuildAggregator({ aggregator, data,where }: { aggregator?: DeepPartial<Aggregator>, data?: DeepPartial<TEntity>, where?:FindOptionsWhere<TEntity> }) {
+        // @ts-ignore
+        data = data ?? {};
+        // @ts-ignore
+        where = where ?? {};
+        const newDataAggregator = {...data,...where};
         if (aggregator) {
             newDataAggregator['aggregator'] = { ...aggregator };
         }
-        // @ts-ignore
-        data = data ?? {};
-        return {
-            ...newDataAggregator,
-            ...data,
-        };
+        return newDataAggregator;
     }
 
     async wrapperTransaction<TypeTransaction = void>(cb: callbackTransactionBase<TypeTransaction>): Promise<TypeTransaction> {
@@ -119,7 +118,7 @@ export class BaseService<TEntity extends BaseEntity> {
 
     @SafeLog()
     public async create(aggregator: Aggregator, data: DeepPartial<TEntity>) {
-        return await this.wrapperTransaction<number>(async (repo) => {
+        return await this.wrapperTransaction<TEntity>(async (repo) => {
             // @ts-ignore
             return await this.createItem(aggregator, data, { repo });
         });
@@ -129,15 +128,15 @@ export class BaseService<TEntity extends BaseEntity> {
     public async createItem(aggregator: Aggregator, data: DeepPartial<TEntity>, {
         repo,
         manager,
-    }: Repositories<TEntity> = {}): Promise<number> {
+    }: Repositories<TEntity> = {}): Promise<TEntity> {
         if (manager) {
             repo = manager.withRepository(this.repo);
         }
         repo ??= this.repo;
-        const newData = this.rebuildData({ aggregator, data });
+        const newData = this.rebuildAggregator({ aggregator, data });
         const repoEntity: TEntity = repo.create(newData);
         await repo.save(repoEntity);
-        return repoEntity.id;
+        return repoEntity;
     }
 
     public async updateBy(aggregator: Aggregator, where: FindOptionsWhere<TEntity> | any, data: DeepPartial<TEntity>, checkField: DeepPartial<TEntity> = null) {
@@ -158,9 +157,9 @@ export class BaseService<TEntity extends BaseEntity> {
             repo = manager.withRepository(this.repo);
         }
         repo ??= this.repo;
-        const newData = this.rebuildData({ aggregator, data });
+        const newData = this.rebuildAggregator({ aggregator, data });
         // @ts-ignore
-        await repo.update({ id }, newData);
+        await repo.update({ id, aggregator }, newData);
     }
 
     @SafeLog()
@@ -169,7 +168,7 @@ export class BaseService<TEntity extends BaseEntity> {
             repo = manager.withRepository(this.repo);
         }
         repo ??= this.repo;
-        const newData = this.rebuildData({ aggregator });
+        const newData = this.rebuildAggregator({ aggregator });
         // @ts-ignore
         await repo.softRemove({ id, ...newData });
     }

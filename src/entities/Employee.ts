@@ -1,4 +1,4 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, Unique } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 
 @Entity({ name: 'employee', comment: 'Сотрудник' })
@@ -13,7 +13,7 @@ export class Employee extends BaseEntity {
     @Column({ comment: 'Почта' })
     email: string;
 
-    @Column({ comment: 'СНИЛС', nullable: true })
+    @Column({ comment: 'СНИЛС', nullable: true , unique: true })
     snils: string;
     // @Column({ comment: 'Токен' })
     // token: string;
