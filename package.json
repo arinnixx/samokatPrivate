@@ -11,7 +11,12 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main"
+    "start:prod": "node dist/main",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:generate": "npm run typeorm migration:generate -- -d src/typeorm.config.ts src/migrations/auto",
+    "migration:run": "npm run typeorm migration:run -- -d src/typeorm.config.ts",
+    "migration:down": "npm run typeorm migration:revert -- -d src/typeorm.config.ts"
+
   },
   "dependencies": {
     "@golevelup/nestjs-rabbitmq": "^6.0.2",
