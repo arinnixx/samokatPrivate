@@ -24,6 +24,6 @@ services:
       - RMQ_QUEUE_AGGREGATOR
       - RMQ_QUEUE_PRIVATE
     ports:
-      - ${PORT}:${PORT}
+      - '3002:3002'
     networks:
       - default
