@@ -1,11 +1,9 @@
 version: "3.8"
 services:
-  notification-service:
+  private:
     restart: unless-stopped
-    extra_hosts:
-      - $SENTRY_NAME:$SENTRY_ADDR
     image: $IMAGE_TAG
-    container_name: notification-service
+    container_name: private
     healthcheck:
       start_period: 20s
       test: ["CMD", "pgrep", "node"]
@@ -15,7 +13,6 @@ services:
     environment:
       - IS_LOGGER
       - PORT
-      - WS_PORT
       - PG_HOST
       - PG_PORT
       - PG_USER
@@ -24,12 +21,9 @@ services:
       - RMQ_URL
       - RMQ_USER
       - RMQ_PASSWORD
-      - RMQ_QUEUE_NOTIFICATIONS
-      - RMQ_QUEUE_NOTIFICATION_MESSAGE
-      - SENTRY_KEY
-      - HOST_GRPS
+      - RMQ_QUEUE_AGGREGATOR
+      - RMQ_QUEUE_PRIVATE
     ports:
       - ${PORT}:${PORT}
-      - ${WS_PORT}:${WS_PORT}
     networks:
       - default
