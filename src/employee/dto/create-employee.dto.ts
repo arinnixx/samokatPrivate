@@ -3,7 +3,22 @@ import { IsEmail, IsNotEmpty, IsPhoneNumber, MaxLength } from 'class-validator';
 
 export class CreateEmployeeDto extends CreateHandbookDto {
     @IsNotEmpty()
-    fio: string;
+    lastName: string;
+
+    @IsNotEmpty()
+    firstName: string;
+
+    @IsNotEmpty()
+    middleName: string;
+
+    @IsNotEmpty()
+    gender: string;
+
+    @IsNotEmpty()
+    citizenship: string;
+
+    @IsNotEmpty()
+    birthDate: string;
 
     @IsPhoneNumber()
     @IsNotEmpty()

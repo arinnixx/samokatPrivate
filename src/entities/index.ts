@@ -9,6 +9,8 @@ import { Order } from './Orders';
 import { TransportType } from './TransportTypes';
 import { DeliveryStatusHistory } from './deliveryStatusHistory';
 import { RequestLog } from './RequestLogs';
+import { Passport } from './Passport';
+import { DriverLicense } from './DriverLicense';
 
 export default [
     Aggregator,
@@ -23,4 +25,6 @@ export default [
     TransportType,
     DeliveryStatusHistory,
     RequestLog,
+    Passport,
+    DriverLicense
 ];
