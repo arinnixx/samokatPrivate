@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { Employee } from './Employee';
+import { Couriers } from './Couriers';
 import { Aggregator } from './Aggregator';
 import { Transport } from './Transport';
 import { StatusType } from './StatusType';
@@ -12,9 +12,9 @@ export class Order extends BaseEntity {
     @JoinColumn({ name: 'aggregator_id' })
     aggregator: Aggregator;
 
-    @ManyToOne(() => Employee)
+    @ManyToOne(() => Couriers)
     @JoinColumn({ name: 'employee_id' })
-    employee: Employee;
+    employee: Couriers;
 
     @ManyToOne(() => Transport)
     @JoinColumn({ name: 'transport_id' })

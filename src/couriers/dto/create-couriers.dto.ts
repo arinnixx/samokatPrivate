@@ -1,7 +1,7 @@
 import { CreateHandbookDto } from '../../base/dto/base.dto';
 import { IsEmail, IsNotEmpty, IsPhoneNumber, MaxLength } from 'class-validator';
 
-export class CreateEmployeeDto extends CreateHandbookDto {
+export class CreateCouriersDto extends CreateHandbookDto {
     @IsNotEmpty()
     lastName: string;
 

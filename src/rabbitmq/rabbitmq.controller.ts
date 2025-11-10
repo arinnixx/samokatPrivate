@@ -5,12 +5,12 @@ import { TransportTypesService } from '../transport-types/transport-types.servic
 import { TransportService } from '../transport/transport.service';
 import { RequestLogsService } from '../request-logs/request-logs.service';
 import { OrdersService } from '../orders/orders.service';
-import { EmployeeAggregatorService } from '../employee-aggregator/employee-aggregator.service';
-import { EmployeeService } from '../employee/employee.service';
 import { StatusTypeService } from '../status-type/status-type.service';
 import { DeliveryJacketsService } from '../delivery-jackets/delivery-jackets.service';
 import { DeliveryBagsService } from '../delivery-bags/delivery-bags.service';
 import { AggregatorService } from '../aggregator/aggregator.service';
+import { CouriersService } from '../couriers/couriers.service';
+import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
 
 @Controller()
 @Injectable()
@@ -22,8 +22,8 @@ export class RabbitmqController {
         private transportService: TransportService,
         private requestLogsService: RequestLogsService,
         private ordersService: OrdersService,
-        private employeeAggregatorService: EmployeeAggregatorService,
-        private employeeService: EmployeeService,
+        private employeeAggregatorService: CouriersAggregatorService,
+        private employeeService: CouriersService,
         private statusTypeService: StatusTypeService,
         private deliveryJacketsService: DeliveryJacketsService,
         private deliveryBagsService: DeliveryBagsService,

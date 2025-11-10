@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PassportService } from './passport.service';
+import { CouriersService } from './couriers.service';
 import { Couriers } from '../entities/Couriers';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RabbitmqModule } from '../rabbitmq/rabbitmq.module';
@@ -13,8 +13,8 @@ import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggre
         RabbitmqModule,
     ],
     controllers: [],
-    providers: [PassportService,RabbitmqService,CouriersAggregatorService],
-    exports: [PassportService],
+    providers: [CouriersService,RabbitmqService,CouriersAggregatorService],
+    exports: [CouriersService],
 })
-export class PassportModule {
+export class CouriersModule {
 }

@@ -1,14 +1,14 @@
 import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { Employee } from './Employee';
+import { Couriers } from './Couriers';
 import { Aggregator } from './Aggregator';
 import { BaseEntity } from '../base/base.entity';
 
 @Entity({ name: 'employee_aggregator', comment: 'Связь сотрудника и агрегатора' })
-export class EmployeeAggregator extends BaseEntity {
+export class CouriersAggregator extends BaseEntity {
 
-    @ManyToOne(() => Employee)
+    @ManyToOne(() => Couriers)
     @JoinColumn({ name: 'employee_id' })
-    employee: Employee;
+    employee: Couriers;
 
     @ManyToOne(() => Aggregator)
     @JoinColumn({ name: 'aggregator_id' })

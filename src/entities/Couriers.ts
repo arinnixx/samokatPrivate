@@ -4,8 +4,8 @@ import { Aggregator } from './Aggregator';
 import { Passport } from './Passport';
 import { DriverLicense } from './DriverLicense';
 
-@Entity({ name: 'employee', comment: 'Сотрудник' })
-export class Employee extends BaseEntity {
+@Entity({ name: 'couriers', comment: 'Сотрудник' })
+export class Couriers extends BaseEntity {
 
     @Column({ comment: 'Фамилия курьера' })
     lastName: string;

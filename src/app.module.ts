@@ -5,8 +5,6 @@ import { AggregatorModule } from './aggregator/aggregator.module';
 import { DeliveryBagsModule } from './delivery-bags/delivery-bags.module';
 import { DeliveryJacketsModule } from './delivery-jackets/delivery-jackets.module';
 import { StatusTypeModule } from './status-type/status-type.module';
-import { EmployeeModule } from './employee/employee.module';
-import { EmployeeAggregatorModule } from './employee-aggregator/employee-aggregator.module';
 import { OrdersModule } from './orders/orders.module';
 import { TransportModule } from './transport/transport.module';
 import { RequestLogsModule } from './request-logs/request-logs.module';
@@ -16,6 +14,8 @@ import { ConfigModule } from '@nestjs/config';
 import entities from './entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RabbitmqShareModule } from './rabbitmq/rabbitmq-share.module';
+import { CouriersModule } from './couriers/couriers.module';
+import { CouriersAggregatorModule } from './couriers-aggregator/couriers-aggregator.module';
 
 @Module({
     imports: [
@@ -39,8 +39,8 @@ import { RabbitmqShareModule } from './rabbitmq/rabbitmq-share.module';
         DeliveryBagsModule,
         DeliveryJacketsModule,
         StatusTypeModule,
-        EmployeeModule,
-        EmployeeAggregatorModule,
+        CouriersModule,
+        CouriersAggregatorModule,
         OrdersModule,
         TransportModule,
         RequestLogsModule,

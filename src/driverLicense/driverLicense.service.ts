@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { BaseService } from '../base/base.service';
-import { Employee } from '../entities/Employee';
+import { Couriers } from '../entities/Couriers';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, DeepPartial, Repository } from 'typeorm';
 import { Aggregator } from '../entities/Aggregator';
 import { Repositories } from '../base/dto/Repositories';
-import { EmployeeAggregatorService } from '../employee-aggregator/employee-aggregator.service';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
+import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
 
 @Injectable()
-export class DriverLicenseService extends BaseService<Employee> {
+export class DriverLicenseService extends BaseService<Couriers> {
     name = 'employee';
 
     constructor(
-        @InjectRepository(Employee) repo: Repository<Employee>,
+        @InjectRepository(Couriers) repo: Repository<Couriers>,
         dataSource: DataSource,
-        private employeeAggregatorService: EmployeeAggregatorService,
+        private employeeAggregatorService: CouriersAggregatorService,
         protected readonly rmqService: RabbitmqService,
     ) {
         super(repo, dataSource);
@@ -23,15 +23,15 @@ export class DriverLicenseService extends BaseService<Employee> {
 
     override rebuildAggregator({ aggregator, data }: {
         aggregator?: DeepPartial<Aggregator>;
-        data?: DeepPartial<Employee>
+        data?: DeepPartial<Couriers>
     }) {
         return super.rebuildAggregator({ data });
     }
 
-    async createItem(aggregator: Aggregator, data: DeepPartial<Employee> & { personal_number: string }, {
+    async createItem(aggregator: Aggregator, data: DeepPartial<Couriers> & { personal_number: string }, {
         repo,
         manager,
-    }: Repositories<Employee> = {}): Promise<Employee> {
+    }: Repositories<Couriers> = {}): Promise<Couriers> {
         let item = await this.findOneBy({ snils: data.snils });
         if (!item) {
             item = await super.createItem(aggregator, data, {

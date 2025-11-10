@@ -6,8 +6,6 @@ import { TransportTypesService } from '../transport-types/transport-types.servic
 import { TransportService } from '../transport/transport.service';
 import { RequestLogsService } from '../request-logs/request-logs.service';
 import { OrdersService } from '../orders/orders.service';
-import { EmployeeAggregatorService } from '../employee-aggregator/employee-aggregator.service';
-import { EmployeeService } from '../employee/employee.service';
 import { DeliveryStatusHistoryService } from '../delivery-status-history/delivery-status-history.service';
 import { StatusTypeService } from '../status-type/status-type.service';
 import { DeliveryJacketsService } from '../delivery-jackets/delivery-jackets.service';
@@ -16,15 +14,17 @@ import { AggregatorService } from '../aggregator/aggregator.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransportType } from '../entities/TransportTypes';
 import { Transport } from '../entities/Transport';
-import { EmployeeAggregator } from '../entities/EmployeeAggregator';
+import { CouriersAggregator } from '../entities/CouriersAggregator';
 import { Order } from '../entities/Orders';
-import { Employee } from '../entities/Employee';
+import { Couriers } from '../entities/Couriers';
 import { DeliveryStatusHistory } from '../entities/deliveryStatusHistory';
 import { StatusType } from '../entities/StatusType';
 import { DeliveryJackets } from '../entities/DeliveryJackets';
 import { DeliveryBags } from '../entities/DeliveryBags';
 import { Aggregator } from '../entities/Aggregator';
 import { RequestLog } from '../entities/RequestLogs';
+import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
+import { CouriersService } from '../couriers/couriers.service';
 
 @Module({
     imports: [
@@ -33,8 +33,8 @@ import { RequestLog } from '../entities/RequestLogs';
             TransportType,
             Transport,
             Order,
-            EmployeeAggregator,
-            Employee,
+            CouriersAggregator,
+            Couriers,
             StatusType,
             DeliveryStatusHistory,
             DeliveryJackets,
@@ -50,8 +50,8 @@ import { RequestLog } from '../entities/RequestLogs';
         TransportService,
         RequestLogsService,
         OrdersService,
-        EmployeeAggregatorService,
-        EmployeeService,
+        CouriersAggregatorService,
+        CouriersService,
         DeliveryStatusHistoryService,
         StatusTypeService,
         DeliveryJacketsService,

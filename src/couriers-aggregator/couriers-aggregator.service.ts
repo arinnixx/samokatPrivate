@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { BaseService } from '../base/base.service';
-import { EmployeeAggregator } from '../entities/EmployeeAggregator';
+import { CouriersAggregator } from '../entities/CouriersAggregator';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
-export class EmployeeAggregatorService extends BaseService<EmployeeAggregator> {
+export class CouriersAggregatorService extends BaseService<CouriersAggregator> {
     name = "employee-aggregator";
     constructor(
-        @InjectRepository(EmployeeAggregator) repo: Repository<EmployeeAggregator>,
+        @InjectRepository(CouriersAggregator) repo: Repository<CouriersAggregator>,
         dataSource: DataSource,
     ) {
         super(repo, dataSource);
