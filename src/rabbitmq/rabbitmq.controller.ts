@@ -7,7 +7,7 @@ import { RequestLogsService } from '../request-logs/request-logs.service';
 import { OrdersService } from '../orders/orders.service';
 import { EmployeeAggregatorService } from '../employee-aggregator/employee-aggregator.service';
 import { EmployeeService } from '../employee/employee.service';
-import { DeliveryStatusService } from '../delivery-status/delivery-status.service';
+import { StatusTypeService } from '../status-type/status-type.service';
 import { DeliveryJacketsService } from '../delivery-jackets/delivery-jackets.service';
 import { DeliveryBagsService } from '../delivery-bags/delivery-bags.service';
 import { AggregatorService } from '../aggregator/aggregator.service';
@@ -24,7 +24,7 @@ export class RabbitmqController {
         private ordersService: OrdersService,
         private employeeAggregatorService: EmployeeAggregatorService,
         private employeeService: EmployeeService,
-        private deliveryStatusService: DeliveryStatusService,
+        private statusTypeService: StatusTypeService,
         private deliveryJacketsService: DeliveryJacketsService,
         private deliveryBagsService: DeliveryBagsService,
         private aggregatorService: AggregatorService,
@@ -34,7 +34,7 @@ export class RabbitmqController {
         this.config['orders'] = this.ordersService;
         this.config['employee-aggregator'] = this.employeeAggregatorService;
         this.config['employee'] = this.employeeService;
-        this.config['delivery-status'] = this.deliveryStatusService;
+        this.config['status-type'] = this.statusTypeService;
         this.config['delivery-jackets'] = this.deliveryJacketsService;
         this.config['delivery-bags'] = this.deliveryBagsService;
         this.config['aggregator'] = this.aggregatorService;
@@ -55,8 +55,7 @@ export class RabbitmqController {
         }
 
         const service = this.config[payload.name];
-        const adminRoute = ['transport-types', 'delivery-status', 'aggregator'].includes(payload.name);
-        console.log(payload);
+        const adminRoute = ['transport-types', 'status-type', 'aggregator'].includes(payload.name);
 
         if (service) {
             switch (payload.method) {

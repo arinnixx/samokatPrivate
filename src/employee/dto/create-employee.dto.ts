@@ -16,4 +16,9 @@ export class CreateEmployeeDto extends CreateHandbookDto {
     @MaxLength(11)
     @IsNotEmpty()
     snils: string;
+
+    @MaxLength(10)
+    @IsNotEmpty()
+    inn: string;
+
 }

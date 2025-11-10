@@ -9,7 +9,7 @@ import { OrdersService } from '../orders/orders.service';
 import { EmployeeAggregatorService } from '../employee-aggregator/employee-aggregator.service';
 import { EmployeeService } from '../employee/employee.service';
 import { DeliveryStatusHistoryService } from '../delivery-status-history/delivery-status-history.service';
-import { DeliveryStatusService } from '../delivery-status/delivery-status.service';
+import { StatusTypeService } from '../status-type/status-type.service';
 import { DeliveryJacketsService } from '../delivery-jackets/delivery-jackets.service';
 import { DeliveryBagsService } from '../delivery-bags/delivery-bags.service';
 import { AggregatorService } from '../aggregator/aggregator.service';
@@ -20,7 +20,7 @@ import { EmployeeAggregator } from '../entities/EmployeeAggregator';
 import { Order } from '../entities/Orders';
 import { Employee } from '../entities/Employee';
 import { DeliveryStatusHistory } from '../entities/deliveryStatusHistory';
-import { DeliveryStatus } from '../entities/DeliveryStatus';
+import { StatusType } from '../entities/StatusType';
 import { DeliveryJackets } from '../entities/DeliveryJackets';
 import { DeliveryBags } from '../entities/DeliveryBags';
 import { Aggregator } from '../entities/Aggregator';
@@ -35,7 +35,7 @@ import { RequestLog } from '../entities/RequestLogs';
             Order,
             EmployeeAggregator,
             Employee,
-            DeliveryStatus,
+            StatusType,
             DeliveryStatusHistory,
             DeliveryJackets,
             DeliveryBags,
@@ -53,7 +53,7 @@ import { RequestLog } from '../entities/RequestLogs';
         EmployeeAggregatorService,
         EmployeeService,
         DeliveryStatusHistoryService,
-        DeliveryStatusService,
+        StatusTypeService,
         DeliveryJacketsService,
         DeliveryBagsService,
         AggregatorService,

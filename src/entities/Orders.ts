@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Employee } from './Employee';
 import { Aggregator } from './Aggregator';
 import { Transport } from './Transport';
-import { DeliveryStatus } from './DeliveryStatus';
+import { StatusType } from './StatusType';
 import { BaseEntity } from '../base/base.entity';
 
 @Entity({ name: 'orders', comment: 'Заказы' })
@@ -26,9 +26,9 @@ export class Order extends BaseEntity {
     @Column({ type: 'bigint', nullable: true, comment: 'Дата окончания' })
     end_date: number;
 
-    @ManyToOne(() => DeliveryStatus)
+    @ManyToOne(() => StatusType)
     @JoinColumn({ name: 'status_id' })
-    status: DeliveryStatus;
+    status: StatusType;
 
     @Column({ type: 'json', comment: 'Маршрут (массив)' })
     route: JSON[];

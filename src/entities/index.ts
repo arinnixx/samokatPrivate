@@ -1,7 +1,7 @@
 import { Aggregator } from './Aggregator';
 import { DeliveryBags } from './DeliveryBags';
 import { DeliveryJackets } from './DeliveryJackets';
-import { DeliveryStatus } from './DeliveryStatus';
+import { StatusType } from './StatusType';
 import { Employee } from './Employee';
 import { Transport } from './Transport';
 import { EmployeeAggregator } from './EmployeeAggregator';
@@ -14,7 +14,7 @@ export default [
     Aggregator,
     DeliveryBags,
     DeliveryJackets,
-    DeliveryStatus,
+    StatusType,
     Employee,
     Transport,
     Employee,

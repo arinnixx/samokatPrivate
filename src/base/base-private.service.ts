@@ -18,10 +18,10 @@ export class BasePrivateService<TEntity extends BaseEntity> {
         await this.repo.save(item);
         if (isSendRmq) {
             await this.rmqService.publish({
-                id: item,
+                id: item.id,
                 name: this.name,
                 method: 'POST',
-                data,
+                data: {id:item.id, ...data},
             });
         }
         return item.id;

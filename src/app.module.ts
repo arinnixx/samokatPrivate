@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { AggregatorModule } from './aggregator/aggregator.module';
 import { DeliveryBagsModule } from './delivery-bags/delivery-bags.module';
 import { DeliveryJacketsModule } from './delivery-jackets/delivery-jackets.module';
-import { DeliveryStatusModule } from './delivery-status/delivery-status.module';
+import { StatusTypeModule } from './status-type/status-type.module';
 import { EmployeeModule } from './employee/employee.module';
 import { EmployeeAggregatorModule } from './employee-aggregator/employee-aggregator.module';
 import { OrdersModule } from './orders/orders.module';
@@ -38,7 +38,7 @@ import { RabbitmqShareModule } from './rabbitmq/rabbitmq-share.module';
         AggregatorModule,
         DeliveryBagsModule,
         DeliveryJacketsModule,
-        DeliveryStatusModule,
+        StatusTypeModule,
         EmployeeModule,
         EmployeeAggregatorModule,
         OrdersModule,

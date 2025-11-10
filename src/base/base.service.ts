@@ -158,8 +158,9 @@ export class BaseService<TEntity extends BaseEntity> {
         }
         repo ??= this.repo;
         const newData = this.rebuildAggregator({ aggregator, data });
+        const newWhere = this.rebuildAggregator({ aggregator });
         // @ts-ignore
-        await repo.update({ id, aggregator }, newData);
+        await repo.update({ id, ...newWhere }, newData);
     }
 
     @SafeLog()

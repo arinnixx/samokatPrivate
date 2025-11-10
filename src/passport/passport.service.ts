@@ -9,8 +9,8 @@ import { EmployeeAggregatorService } from '../employee-aggregator/employee-aggre
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 
 @Injectable()
-export class EmployeeService extends BaseService<Employee> {
-    name = 'couriers';
+export class PassportService extends BaseService<Employee> {
+    name = 'employee';
 
     constructor(
         @InjectRepository(Employee) repo: Repository<Employee>,
