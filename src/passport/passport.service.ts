@@ -10,7 +10,7 @@ import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggre
 
 @Injectable()
 export class PassportService extends BaseService<Couriers> {
-    name = 'employee';
+    name = 'passport';
 
     constructor(
         @InjectRepository(Couriers) repo: Repository<Couriers>,
