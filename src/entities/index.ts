@@ -11,6 +11,9 @@ import { DeliveryStatusHistory } from './deliveryStatusHistory';
 import { RequestLog } from './RequestLogs';
 import { Passport } from './Passport';
 import { DriverLicense } from './DriverLicense';
+import { CourierViolations } from './CourierViolations';
+import { ViolationsType } from './ViolationType';
+import { CourierShift } from './CourierShifts';
 
 export default [
     Aggregator,
@@ -26,5 +29,9 @@ export default [
     DeliveryStatusHistory,
     RequestLog,
     Passport,
-    DriverLicense
+    DriverLicense,
+    CourierViolations,
+    ViolationsType,
+    CourierShift
+
 ];

@@ -12,7 +12,7 @@ export class CourierViolations extends BaseEntity {
     @JoinColumn({ name: 'courier_id' })
     couriers: Couriers;
 
-    @Column({ comment: 'Код' })
+    @Column({ type:'bigint', comment: 'Код' })
     violation_date: number;
 
     @ManyToOne(() => ViolationsType)
