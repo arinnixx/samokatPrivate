@@ -6,7 +6,8 @@ import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
 export class RequestLogsService extends BaseService<RequestLog> {
-    name = "request-logs";
+    name = 'request-logs';
+
     constructor(
         @InjectRepository(RequestLog) repo: Repository<RequestLog>,
         dataSource: DataSource,

@@ -32,6 +32,6 @@ export default [
     DriverLicense,
     CourierViolations,
     ViolationsType,
-    CourierShift
+    CourierShift,
 
 ];

@@ -8,7 +8,8 @@ import { Aggregator } from '../entities/Aggregator';
 
 @Injectable()
 export class OrdersService extends BaseService<Order> {
-    name="orders"
+    name = 'orders';
+
     constructor(
         @InjectRepository(Order) repo: Repository<Order>,
         dataSource: DataSource,
@@ -17,10 +18,10 @@ export class OrdersService extends BaseService<Order> {
         super(repo, dataSource);
     }
 
-    async updateBy(aggregator:Aggregator,where: any, data: DeepPartial<Order>, checkField: DeepPartial<Order> = null): Promise<boolean> {
-       const newWhere = this.rebuildAggregator({ aggregator, where })
+    async updateBy(aggregator: Aggregator, where: any, data: DeepPartial<Order>, checkField: DeepPartial<Order> = null): Promise<boolean> {
+        const newWhere = this.rebuildAggregator({ aggregator, where });
         const item = await this.getBy(newWhere, {}, ['status']);
-        const res = await super.updateBy(aggregator,where, data, checkField);
+        const res = await super.updateBy(aggregator, where, data, checkField);
         if (data.status.id !== item.status.id) {
             await this.deliveryStatusHistory.createItem({
                 order: item,

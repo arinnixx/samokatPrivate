@@ -1,7 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
-import { ApiProperty } from '@nestjs/swagger';
-import { TransportType } from './TransportTypes';
 import { Couriers } from './Couriers';
 import { ViolationsType } from './ViolationType';
 
@@ -12,7 +10,7 @@ export class CourierViolations extends BaseEntity {
     @JoinColumn({ name: 'courier_id' })
     couriers: Couriers;
 
-    @Column({ type:'bigint', comment: 'Код' })
+    @Column({ type: 'bigint', comment: 'Код' })
     violation_date: number;
 
     @ManyToOne(() => ViolationsType)

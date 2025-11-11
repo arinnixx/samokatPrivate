@@ -92,12 +92,12 @@ export class BaseService<TEntity extends BaseEntity> {
     ) {
     }
 
-    rebuildAggregator({ aggregator, data,where }: { aggregator?: DeepPartial<Aggregator>, data?: DeepPartial<TEntity>, where?:FindOptionsWhere<TEntity> }) {
+    rebuildAggregator({ aggregator, data, where }: { aggregator?: DeepPartial<Aggregator>, data?: DeepPartial<TEntity>, where?: FindOptionsWhere<TEntity> }) {
         // @ts-ignore
         data = data ?? {};
         // @ts-ignore
         where = where ?? {};
-        const newDataAggregator = {...data,...where};
+        const newDataAggregator = { ...data, ...where };
         if (aggregator) {
             newDataAggregator['aggregator'] = { ...aggregator };
         }

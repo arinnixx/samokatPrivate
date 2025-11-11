@@ -1,6 +1,5 @@
-import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
-import { Aggregator } from './Aggregator';
 import { Passport } from './Passport';
 import { DriverLicense } from './DriverLicense';
 
@@ -31,10 +30,10 @@ export class Couriers extends BaseEntity {
     @Column({ comment: 'Почта' })
     email: string;
 
-    @Column({ comment: 'СНИЛС', nullable: true , unique: true })
+    @Column({ comment: 'СНИЛС', nullable: true, unique: true })
     snils: string;
 
-    @Column({ comment: 'ИНН', nullable: true , unique: true })
+    @Column({ comment: 'ИНН', nullable: true, unique: true })
     inn: string;
 
     @ManyToOne(() => Passport)

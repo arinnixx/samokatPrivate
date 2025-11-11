@@ -1,18 +1,15 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { TransportType } from './TransportTypes';
-import { Aggregator } from './Aggregator';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 import { Couriers } from './Couriers';
-import { Transport } from './Transport';
-import { ApiProperty } from '@nestjs/swagger';
 
-export enum  Movement {
-    auto= "Авто",
-    people = "Пеший",
+export enum Movement {
+    auto = 'Авто',
+    people = 'Пеший',
     velo = 'Вело',
     moto = 'Мото',
     elvelo = 'Электровело'
 }
+
 @Entity({ name: 'transport', comment: 'Средства передвижения' })
 export class CourierShift extends BaseEntity {
 
@@ -20,7 +17,7 @@ export class CourierShift extends BaseEntity {
     @JoinColumn({ name: 'courier_id' })
     courier: Couriers;
 
-    @Column({ comment: 'Код',type:'enum', enum: Movement })
+    @Column({ comment: 'Код', type: 'enum', enum: Movement })
     movement_type: Movement;
 
     @Column({ comment: 'Тип передвижения' })

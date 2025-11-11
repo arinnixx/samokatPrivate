@@ -8,6 +8,7 @@ import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 @Injectable()
 export class DeliveryStatusHistoryService extends BasePrivateService<DeliveryStatusHistory> {
     name = 'delivery-status-history';
+
     constructor(
         @InjectRepository(DeliveryStatusHistory) repo: Repository<DeliveryStatusHistory>,
         dataSource: DataSource,

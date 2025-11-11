@@ -9,11 +9,11 @@ import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggre
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Couriers,CouriersAggregator]),
+        TypeOrmModule.forFeature([Couriers, CouriersAggregator]),
         RabbitmqModule,
     ],
     controllers: [],
-    providers: [PassportService,RabbitmqService,CouriersAggregatorService],
+    providers: [PassportService, RabbitmqService, CouriersAggregatorService],
     exports: [PassportService],
 })
 export class PassportModule {

@@ -21,7 +21,7 @@ export class BasePrivateService<TEntity extends BaseEntity> {
                 id: item.id,
                 name: this.name,
                 method: 'POST',
-                data: {id:item.id, ...data},
+                data: { id: item.id, ...data },
             });
         }
         return item.id;

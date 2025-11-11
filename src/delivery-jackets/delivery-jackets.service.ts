@@ -6,7 +6,8 @@ import { BaseService } from '../base/base.service';
 
 @Injectable()
 export class DeliveryJacketsService extends BaseService<DeliveryJackets> {
-    name = "delivery-jackets";
+    name = 'delivery-jackets';
+
     constructor(
         @InjectRepository(DeliveryJackets) repo: Repository<DeliveryJackets>,
         dataSource: DataSource,

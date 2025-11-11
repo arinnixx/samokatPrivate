@@ -22,6 +22,7 @@ export class CouriersAggregator extends BaseEntity {
 
     @Column({ comment: 'Табельный номер' })
     personnel_number: string;
+
     @BeforeInsert()
     setStart_date() {
         this.start_date = Math.floor(Date.now() / 1000);
