@@ -11,10 +11,8 @@ export class CreateCouriersDto extends CreateHandbookDto {
     @IsNotEmpty()
     middleName: string;
 
-    @IsNotEmpty()
     gender: string;
 
-    @IsNotEmpty()
     citizenship: string;
 
     @IsNotEmpty()
@@ -25,15 +23,12 @@ export class CreateCouriersDto extends CreateHandbookDto {
     phone: string;
 
     @IsEmail()
-    @IsNotEmpty()
     email: string;
 
     @MaxLength(11)
-    @IsNotEmpty()
     snils: string;
 
     @MaxLength(10)
-    @IsNotEmpty()
     inn: string;
 
 }
