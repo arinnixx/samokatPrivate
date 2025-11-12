@@ -10,7 +10,7 @@ export enum Movement {
     elvelo = 'Электровело'
 }
 
-@Entity({ name: 'transport', comment: 'Средства передвижения' })
+@Entity({ name: 'courier-shift', comment: 'заказы' })
 export class CourierShift extends BaseEntity {
 
     @ManyToOne(() => Couriers)
