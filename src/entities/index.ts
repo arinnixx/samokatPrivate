@@ -14,7 +14,6 @@ export default [
     Aggregator,
     StatusType,
     Couriers,
-    Couriers,
     CouriersAggregator,
     DeliveryStatusHistory,
     RequestLog,
@@ -23,5 +22,4 @@ export default [
     CourierViolations,
     ViolationsType,
     CourierShift,
-
 ];
