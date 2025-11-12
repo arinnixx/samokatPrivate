@@ -24,7 +24,7 @@ export class Couriers extends BaseEntity {
     @Column({ comment: 'Номер телефона курьера' })
     phone: string;
 
-    @Column({ comment: 'Дата рождения курьера' })
+    @Column({ type: 'bigint', comment: 'Дата рождения курьера' })
     birthDate: number;
 
     @Column({ comment: 'Почта' })
