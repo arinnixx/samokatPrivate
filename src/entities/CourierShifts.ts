@@ -17,10 +17,10 @@ export class CourierShift extends BaseEntity {
     @JoinColumn({ name: 'courier_id' })
     courier: Couriers;
 
-    @Column({ comment: 'Код', type: 'enum', enum: Movement })
+    @Column({ comment: 'Тип передвижения', type: 'enum', enum: Movement })
     movement_type: Movement;
 
-    @Column({ comment: 'Тип передвижения' })
+    @Column({ comment: 'номер тс' })
     vehicle_number: string;
 
     @Column({ comment: 'Номер сумки' })
