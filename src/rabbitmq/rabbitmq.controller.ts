@@ -14,13 +14,13 @@ export class RabbitmqController {
 
     constructor(
         private requestLogsService: RequestLogsService,
-        private employeeAggregatorService: CouriersAggregatorService,
-        private employeeService: CouriersService,
+        private couriersAggregatorService: CouriersAggregatorService,
+        private couriersService: CouriersService,
         private statusTypeService: StatusTypeService,
         private aggregatorService: AggregatorService,
     ) {
-        this.config['employee-aggregator'] = this.employeeAggregatorService;
-        this.config['employee'] = this.employeeService;
+        this.config['couriers-aggregator'] = this.couriersAggregatorService;
+        this.config['couriers'] = this.couriersService;
         this.config['status-type'] = this.statusTypeService;
         this.config['aggregator'] = this.aggregatorService;
     }

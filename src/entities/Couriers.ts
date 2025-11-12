@@ -12,13 +12,13 @@ export class Couriers extends BaseEntity {
     @Column({ comment: 'Имя курьера' })
     firstName: string;
 
-    @Column({ comment: 'Отчество курьера' })
+    @Column({ comment: 'Отчество курьера', nullable: true })
     middleName: string;
 
-    @Column({ comment: 'Пол курьера' })
+    @Column({ comment: 'Пол курьера' , nullable: true})
     gender: string;
 
-    @Column({ comment: 'Гражданство' })
+    @Column({ comment: 'Гражданство' , nullable: true})
     citizenship: string;
 
     @Column({ comment: 'Номер телефона курьера' })
@@ -27,7 +27,7 @@ export class Couriers extends BaseEntity {
     @Column({ type: 'bigint', comment: 'Дата рождения курьера' })
     birthDate: number;
 
-    @Column({ comment: 'Почта' })
+    @Column({ comment: 'Почта', nullable: true })
     email: string;
 
     @Column({ comment: 'СНИЛС', nullable: true, unique: true })
