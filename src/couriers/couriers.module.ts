@@ -6,14 +6,18 @@ import { RabbitmqModule } from '../rabbitmq/rabbitmq.module';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 import { CouriersAggregator } from '../entities/CouriersAggregator';
 import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
+import { Passport } from '../entities/Passport';
+import { DriverLicense } from '../entities/DriverLicense';
+import { PassportService } from '../passport/passport.service';
+import { DriverLicenseService } from '../driver-license/driverLicense.service';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Couriers, CouriersAggregator]),
+        TypeOrmModule.forFeature([Couriers, CouriersAggregator,Passport,DriverLicense]),
         RabbitmqModule,
     ],
     controllers: [],
-    providers: [CouriersService, RabbitmqService, CouriersAggregatorService],
+    providers: [CouriersService, RabbitmqService, CouriersAggregatorService,PassportService,DriverLicenseService],
     exports: [CouriersService],
 })
 export class CouriersModule {

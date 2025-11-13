@@ -1,4 +1,4 @@
-import { CreateCouriersDto } from './create-couriers.dto';
+import { CreateCourierDto } from './create-couriers.dto';
 
-export class UpdateCouriersDto extends CreateCouriersDto {
+export class UpdateCouriersDto extends CreateCourierDto {
 }

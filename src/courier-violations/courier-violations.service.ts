@@ -6,16 +6,15 @@ import { DataSource, DeepPartial, Repository } from 'typeorm';
 import { Aggregator } from '../entities/Aggregator';
 import { Repositories } from '../base/dto/Repositories';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
-import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
+import { CourierViolations } from '../entities/CourierViolations';
 
 @Injectable()
-export class CourierViolationsService extends BaseService<Couriers> {
+export class CourierViolationsService extends BaseService<CourierViolations> {
     name = 'courier-violations';
 
     constructor(
-        @InjectRepository(Couriers) repo: Repository<Couriers>,
+        @InjectRepository(CourierViolations) repo: Repository<CourierViolations>,
         dataSource: DataSource,
-        private employeeAggregatorService: CouriersAggregatorService,
         protected readonly rmqService: RabbitmqService,
     ) {
         super(repo, dataSource);
@@ -23,29 +22,25 @@ export class CourierViolationsService extends BaseService<Couriers> {
 
     override rebuildAggregator({ aggregator, data }: {
         aggregator?: DeepPartial<Aggregator>;
-        data?: DeepPartial<Couriers>
+        data?: DeepPartial<CourierViolations>
     }) {
         return super.rebuildAggregator({ data });
     }
 
-    async createItem(aggregator: Aggregator, data: DeepPartial<Couriers> & { personal_number: string }, {
+    async createItem(data: DeepPartial<CourierViolations>, aggregator: Aggregator, {
         repo,
         manager,
-    }: Repositories<Couriers> = {}): Promise<Couriers> {
-        let item = await this.findOneBy({ snils: data.snils });
-        if (!item) {
-            item = await super.createItem(aggregator, data, {
-                repo,
-                manager,
-            });
-        }
+    }: Repositories<CourierViolations> = {}): Promise<CourierViolations> {
+        const item = await super.createItem(data, aggregator, {
+            repo,
+            manager,
+        });
         await this.rmqService.publish({
             id: item.id,
             name: this.name,
             method: 'POST',
             data: item,
         });
-        await this.employeeAggregatorService.createItem(aggregator, { employee: item, personnel_number: data.personal_number });
         return item;
     }
 

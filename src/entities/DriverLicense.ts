@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
+import { Couriers } from './Couriers';
 
 @Entity({ name: 'driverLicense', comment: 'Сотрудник' })
 export class DriverLicense extends BaseEntity {
@@ -22,4 +23,7 @@ export class DriverLicense extends BaseEntity {
     @Column({ comment: 'Год начала ВУ' })
     experience_startYear: string;
 
+    @ManyToOne(() => Couriers)
+    @JoinColumn({ name: 'couriers_id' })
+    couriers: Couriers;
 }

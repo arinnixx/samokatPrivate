@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
+import { Couriers } from './Couriers';
 
 @Entity({ name: 'passport', comment: 'Паспорт' })
 export class Passport extends BaseEntity {
@@ -23,5 +24,9 @@ export class Passport extends BaseEntity {
     registrationAddress: string;
 
     @Column({ comment: 'Адрес фактическогo проживания' })
-    residenceAddress: number;
+    residenceAddress: string;
+
+    @ManyToOne(() => Couriers)
+    @JoinColumn({ name: 'couriers_id' })
+    couriers: Couriers;
 }

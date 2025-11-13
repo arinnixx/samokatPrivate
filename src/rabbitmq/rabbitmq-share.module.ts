@@ -15,6 +15,10 @@ import { Aggregator } from '../entities/Aggregator';
 import { RequestLog } from '../entities/RequestLogs';
 import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
 import { CouriersService } from '../couriers/couriers.service';
+import { Passport } from '../entities/Passport';
+import { DriverLicense } from '../entities/DriverLicense';
+import { PassportService } from '../passport/passport.service';
+import { DriverLicenseService } from '../driver-license/driverLicense.service';
 
 @Module({
     imports: [
@@ -26,6 +30,8 @@ import { CouriersService } from '../couriers/couriers.service';
             DeliveryStatusHistory,
             Aggregator,
             RequestLog,
+            Passport,
+            DriverLicense,
         ]),
     ],
     controllers: [RabbitmqController],
@@ -37,6 +43,8 @@ import { CouriersService } from '../couriers/couriers.service';
         DeliveryStatusHistoryService,
         StatusTypeService,
         AggregatorService,
+        PassportService,
+        DriverLicenseService,
     ],
     exports: [RabbitmqService],
 })

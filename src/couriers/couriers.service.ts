@@ -7,6 +7,9 @@ import { Aggregator } from '../entities/Aggregator';
 import { Repositories } from '../base/dto/Repositories';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
+import { CreateCourierDto } from './dto/create-couriers.dto';
+import { PassportService } from '../passport/passport.service';
+import { DriverLicenseService } from '../driver-license/driverLicense.service';
 
 @Injectable()
 export class CouriersService extends BaseService<Couriers> {
@@ -15,7 +18,9 @@ export class CouriersService extends BaseService<Couriers> {
     constructor(
         @InjectRepository(Couriers) repo: Repository<Couriers>,
         dataSource: DataSource,
-        private employeeAggregatorService: CouriersAggregatorService,
+        private couriersAggregatorService: CouriersAggregatorService,
+        private passportService: PassportService,
+        private driverLicenseService:DriverLicenseService ,
         protected readonly rmqService: RabbitmqService,
     ) {
         super(repo, dataSource);
@@ -27,14 +32,16 @@ export class CouriersService extends BaseService<Couriers> {
     }) {
         return super.rebuildAggregator({ data });
     }
-
-    async createItem(aggregator: Aggregator, data: DeepPartial<Couriers> & { personal_number: string }, {
+//@ts-ignore
+    async createItem( data: CreateCourierDto,aggregator: Aggregator , {
         repo,
         manager,
     }: Repositories<Couriers> = {}): Promise<Couriers> {
-        let item = await this.findOneBy({ snils: data.snils });
+        const {passport,driverLicense,...couriers} = data
+        let item = await this.findOneBy({ snils: couriers.snils });
         if (!item) {
-            item = await super.createItem(aggregator, data, {
+            //@ts-ignore
+            item = await super.createItem( couriers,aggregator, {
                 repo,
                 manager,
             });
@@ -45,7 +52,10 @@ export class CouriersService extends BaseService<Couriers> {
             method: 'POST',
             data: item,
         });
-        await this.employeeAggregatorService.createItem(aggregator, { employee: item, personnel_number: data.personal_number });
+        console.log(item);
+        await this.couriersAggregatorService.createItem( { couriers: item },aggregator);
+        await this.driverLicenseService.createItem( {...driverLicense,couriers: item},aggregator)
+        await this.passportService.createItem( {...passport,couriers: item},aggregator)
         return item;
     }
 

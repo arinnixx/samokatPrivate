@@ -1,34 +1,110 @@
-import { CreateHandbookDto } from '../../base/dto/base.dto';
-import { IsEmail, IsNotEmpty, IsPhoneNumber, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsEmail, IsIn, Matches } from 'class-validator';
 
-export class CreateCouriersDto extends CreateHandbookDto {
+class PassportDto {
     @IsNotEmpty()
+    @IsString()
+    series: string;
+
+    @IsNotEmpty()
+    @IsString()
+    number: string;
+
+    @IsNotEmpty()
+    @IsString()
+    issueDate: string;
+
+    @IsNotEmpty()
+    @IsString()
+    issuedBy: string;
+
+    @IsNotEmpty()
+    @IsString()
+    birthPlace: string;
+
+    @IsNotEmpty()
+    @IsString()
+    registrationAddress: string;
+
+    @IsOptional()
+    @IsString()
+    residenceAddress?: string;
+}
+
+class DriverLicenseExperienceDto {
+    @IsNotEmpty()
+    startYear: number;
+}
+
+class DriverLicenseDto {
+    @IsNotEmpty()
+    @IsString()
+    country: string;
+
+    @IsNotEmpty()
+    @IsString()
+    series: string;
+
+    @IsNotEmpty()
+    @IsString()
+    number: string;
+
+    @IsNotEmpty()
+    @IsString()
+    issueDate: string;
+
+
+    @IsNotEmpty()
+    @IsString()
+    expiryDate: string;
+
+    @IsNotEmpty()
+    experience: DriverLicenseExperienceDto;
+}
+
+export class CreateCourierDto {
+    @IsNotEmpty()
+    @IsString()
     lastName: string;
 
     @IsNotEmpty()
+    @IsString()
     firstName: string;
 
-    @IsNotEmpty()
-    middleName: string;
-
-    gender: string;
-
-    citizenship: string;
+    @IsOptional()
+    @IsString()
+    middleName?: string;
 
     @IsNotEmpty()
+    @IsString()
     birthDate: string;
 
-    @IsPhoneNumber()
     @IsNotEmpty()
+    @Matches(/^\+7\d{10}$/, { message: 'Phone must be in format +7XXXXXXXXXX' })
     phone: string;
 
+    @IsOptional()
     @IsEmail()
-    email: string;
+    email?: string;
 
-    @MaxLength(11)
-    snils: string;
+    @IsOptional()
+    @IsIn(['M', 'F'])
+    gender?: string;
 
-    @MaxLength(10)
-    inn: string;
+    @IsOptional()
+    @IsString()
+    inn?: string;
 
+    @IsOptional()
+    @IsString()
+    citizenship?: string;
+
+    @IsNotEmpty()
+    passport: PassportDto;
+
+    @IsOptional()
+    @IsString()
+    snils?: string;
+
+    @IsNotEmpty()
+    driverLicense: DriverLicenseDto;
 }

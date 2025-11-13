@@ -30,11 +30,11 @@ export class RabbitmqController {
     })
     async handleMessage(payload: any) {
         try {
-            await this.requestLogsService.createItem(null, {
+            await this.requestLogsService.createItem( {
                 request_data: {
                     ...payload,
                 },
-            });
+            },null);
         } catch (logError) {
             console.error('Ошибка при записи лога:', logError);
         }
@@ -48,7 +48,7 @@ export class RabbitmqController {
                     if (adminRoute) {
                         service.createItem(payload.data, true);
                     } else {
-                        service.create(payload.aggregator, payload.data);
+                        service.createItem(payload.data,payload.aggregator);
                     }
                     break;
                 case 'PATCH':

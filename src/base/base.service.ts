@@ -117,15 +117,15 @@ export class BaseService<TEntity extends BaseEntity> {
     }
 
     @SafeLog()
-    public async create(aggregator: Aggregator, data: DeepPartial<TEntity>) {
+    public async create( data: DeepPartial<TEntity>,aggregator: Aggregator) {
         return await this.wrapperTransaction<TEntity>(async (repo) => {
             // @ts-ignore
-            return await this.createItem(aggregator, data, { repo });
+            return await this.createItem( data, aggregator,{ repo });
         });
     }
 
     @SafeLog()
-    public async createItem(aggregator: Aggregator, data: DeepPartial<TEntity>, {
+    public async createItem( data: DeepPartial<TEntity>,aggregator: Aggregator, {
         repo,
         manager,
     }: Repositories<TEntity> = {}): Promise<TEntity> {
@@ -139,17 +139,17 @@ export class BaseService<TEntity extends BaseEntity> {
         return repoEntity;
     }
 
-    public async updateBy(aggregator: Aggregator, where: FindOptionsWhere<TEntity> | any, data: DeepPartial<TEntity>, checkField: DeepPartial<TEntity> = null) {
+    public async updateBy( where: FindOptionsWhere<TEntity> | any, data: DeepPartial<TEntity>,aggregator: Aggregator, checkField: DeepPartial<TEntity> = null) {
         const repoEntity: TEntity = await this.findOneBy(where);
         await this.wrapperTransaction(async (repo) => {
             // @ts-ignore
-            await this.updateItem(aggregator, repoEntity.id, data, { repo });
+            await this.updateItem( repoEntity.id, data,aggregator, { repo });
         });
         return true;
     }
 
     @SafeLog()
-    async updateItem(aggregator: Aggregator, id: number, data: DeepPartial<TEntity> = null, {
+    async updateItem( id: number, data: DeepPartial<TEntity> = null,aggregator: Aggregator, {
         repo,
         manager,
     }: Repositories<TEntity> = {}) {
@@ -164,7 +164,7 @@ export class BaseService<TEntity extends BaseEntity> {
     }
 
     @SafeLog()
-    async remove(aggregator: Aggregator, id: number, { repo, manager }: Repositories<TEntity> = {}) {
+    async remove( id: number,aggregator: Aggregator, { repo, manager }: Repositories<TEntity> = {}) {
         if (manager) {
             repo = manager.withRepository(this.repo);
         }

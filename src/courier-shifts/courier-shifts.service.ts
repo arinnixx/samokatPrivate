@@ -1,21 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { BaseService } from '../base/base.service';
-import { Couriers } from '../entities/Couriers';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, DeepPartial, Repository } from 'typeorm';
 import { Aggregator } from '../entities/Aggregator';
 import { Repositories } from '../base/dto/Repositories';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
-import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
+import { CourierShift } from '../entities/CourierShifts';
+import { Passport } from '../entities/Passport';
 
 @Injectable()
-export class CourierShiftsService extends BaseService<Couriers> {
+export class CourierShiftsService extends BaseService<CourierShift> {
     name = 'courier-shifts';
 
     constructor(
-        @InjectRepository(Couriers) repo: Repository<Couriers>,
+        @InjectRepository(CourierShift) repo: Repository<CourierShift>,
         dataSource: DataSource,
-        private employeeAggregatorService: CouriersAggregatorService,
         protected readonly rmqService: RabbitmqService,
     ) {
         super(repo, dataSource);
@@ -23,29 +22,25 @@ export class CourierShiftsService extends BaseService<Couriers> {
 
     override rebuildAggregator({ aggregator, data }: {
         aggregator?: DeepPartial<Aggregator>;
-        data?: DeepPartial<Couriers>
+        data?: DeepPartial<CourierShift>
     }) {
         return super.rebuildAggregator({ data });
     }
 
-    async createItem(aggregator: Aggregator, data: DeepPartial<Couriers> & { personal_number: string }, {
+    async createItem( data: DeepPartial<CourierShift>,aggregator: Aggregator, {
         repo,
         manager,
-    }: Repositories<Couriers> = {}): Promise<Couriers> {
-        let item = await this.findOneBy({ snils: data.snils });
-        if (!item) {
-            item = await super.createItem(aggregator, data, {
-                repo,
-                manager,
-            });
-        }
+    }: Repositories<CourierShift> = {}): Promise<CourierShift> {
+        const item = await super.createItem( data, aggregator,{
+            repo,
+            manager,
+        });
         await this.rmqService.publish({
             id: item.id,
             name: this.name,
             method: 'POST',
             data: item,
         });
-        await this.employeeAggregatorService.createItem(aggregator, { employee: item, personnel_number: data.personal_number });
         return item;
     }
 
