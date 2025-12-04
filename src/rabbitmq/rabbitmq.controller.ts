@@ -6,6 +6,7 @@ import { StatusTypeService } from '../status-type/status-type.service';
 import { AggregatorService } from '../aggregator/aggregator.service';
 import { CouriersService } from '../couriers/couriers.service';
 import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
+import { ViolationsTypeService } from '../violations-type/violations-type.service';
 
 @Controller()
 @Injectable()
@@ -18,11 +19,13 @@ export class RabbitmqController {
         private couriersService: CouriersService,
         private statusTypeService: StatusTypeService,
         private aggregatorService: AggregatorService,
+        private violationsTypeService: ViolationsTypeService,
     ) {
         this.config['couriers-aggregator'] = this.couriersAggregatorService;
         this.config['couriers'] = this.couriersService;
         this.config['status-type'] = this.statusTypeService;
         this.config['aggregator'] = this.aggregatorService;
+        this.config['violations-type'] = this.violationsTypeService;
     }
 
     @RabbitSubscribe({
@@ -30,11 +33,11 @@ export class RabbitmqController {
     })
     async handleMessage(payload: any) {
         try {
-            await this.requestLogsService.createItem( {
+            await this.requestLogsService.createItem({
                 request_data: {
                     ...payload,
                 },
-            },null);
+            }, null);
         } catch (logError) {
             console.error('Ошибка при записи лога:', logError);
         }
@@ -48,7 +51,7 @@ export class RabbitmqController {
                     if (adminRoute) {
                         service.createItem(payload.data, true);
                     } else {
-                        service.createItem(payload.data,payload.aggregator);
+                        service.createItem(payload.data, payload.aggregator);
                     }
                     break;
                 case 'PATCH':

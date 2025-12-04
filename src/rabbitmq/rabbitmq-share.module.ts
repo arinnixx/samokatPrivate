@@ -19,6 +19,8 @@ import { Passport } from '../entities/Passport';
 import { DriverLicense } from '../entities/DriverLicense';
 import { PassportService } from '../passport/passport.service';
 import { DriverLicenseService } from '../driver-license/driverLicense.service';
+import { ViolationsTypeService } from '../violations-type/violations-type.service';
+import { ViolationsType } from '../entities/ViolationType';
 
 @Module({
     imports: [
@@ -32,6 +34,7 @@ import { DriverLicenseService } from '../driver-license/driverLicense.service';
             RequestLog,
             Passport,
             DriverLicense,
+            ViolationsType
         ]),
     ],
     controllers: [RabbitmqController],
@@ -45,6 +48,7 @@ import { DriverLicenseService } from '../driver-license/driverLicense.service';
         AggregatorService,
         PassportService,
         DriverLicenseService,
+        ViolationsTypeService
     ],
     exports: [RabbitmqService],
 })
