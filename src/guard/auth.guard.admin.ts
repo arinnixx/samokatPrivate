@@ -4,7 +4,7 @@ import { IS_ADMIN_CONTROLLER } from '../decorators/adminController';
 import { TokenService } from '../token/token.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuardAdmin implements CanActivate {
 
     constructor(
         private reflector: Reflector,
@@ -30,15 +30,15 @@ export class AuthGuard implements CanActivate {
             if (bearer !== 'Bearer' || !token) {
                 throw new UnauthorizedException();
             }
-            const aggregator = await this.tokenService.verifyToken(token);
-            if (!aggregator) {
+            const admin = await this.tokenService.verifyTokenAdmin(token);
+            if (!admin) {
                 throw new UnauthorizedException();
             }
             // Проверяем, что токен в БД соответствует переданному
-            if (aggregator.token !== token) {
+            if (admin.token !== token) {
                 throw new UnauthorizedException('Токен был отозван или заменен');
             }
-            req.session = aggregator;
+            req.session = admin;
             req.token = token;
             return true;
         } catch (e) {

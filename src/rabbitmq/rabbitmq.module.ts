@@ -22,7 +22,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
                         prefetchCount: 10,
                     },
                 },
-                uri: `amqp://${process.env.RMQ_USER}:${process.env.RMQ_PASSWORD}@${process.env.RMQ_URL}`,
+                uri: [`amqp://localhost:5672`],
                 enableControllerDiscovery: true,
             }),
         }),

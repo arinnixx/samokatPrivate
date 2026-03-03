@@ -4,13 +4,16 @@ import { Aggregator } from '../entities/Aggregator';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RabbitmqModule } from '../rabbitmq/rabbitmq.module';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
+import { TokenModule } from '../token/token.module';
+import { AggregatorController } from './aggregator.controller';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Aggregator]),
         RabbitmqModule,
+        TokenModule,
     ],
-    controllers: [],
+    controllers: [AggregatorController],
     providers: [AggregatorService, RabbitmqService],
     exports: [AggregatorService],
 })

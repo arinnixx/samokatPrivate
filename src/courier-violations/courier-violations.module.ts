@@ -1,19 +1,18 @@
 import { Module } from '@nestjs/common';
 import { CourierViolationsService } from './courier-violations.service';
-import { Couriers } from '../entities/Couriers';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RabbitmqModule } from '../rabbitmq/rabbitmq.module';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
-import { CouriersAggregator } from '../entities/CouriersAggregator';
-import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
+import { CourierViolations } from '../entities/CourierViolations';
+import { CourierViolationsController } from './courier-violations.controller';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Couriers, CouriersAggregator]),
+        TypeOrmModule.forFeature([CourierViolations]),
         RabbitmqModule,
     ],
-    controllers: [],
-    providers: [CourierViolationsService, RabbitmqService, CouriersAggregatorService],
+    controllers: [CourierViolationsController],
+    providers: [CourierViolationsService, RabbitmqService],
     exports: [CourierViolationsService],
 })
 export class CourierViolationsModule {

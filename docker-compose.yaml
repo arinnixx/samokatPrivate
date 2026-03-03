@@ -2,8 +2,10 @@ version: "3.8"
 services:
   private:
     restart: unless-stopped
-    image: $IMAGE_TAG
     container_name: private
+    build:
+      context: .
+      dockerfile: Dockerfile
     healthcheck:
       start_period: 20s
       test: ["CMD", "pgrep", "node"]
@@ -26,21 +28,28 @@ services:
     ports:
       - '3002:3002'
     networks:
-      - default
-  postgres:
-      image: postgres:16-alpine
-      container_name: postgres
-      restart: unless-stopped
-      ports:
-        - "5432:5432"
-      environment:
-        POSTGRES_USER: admin
-        POSTGRES_PASSWORD: secretpassword
-        POSTGRES_DB: mydatabase
-      volumes:
-        - postgres_data:/var/lib/postgresql/data
-        - postgres_backup:/backups
+      - shared-network
+  postgres_private:
+    image: postgres:16-alpine
+    container_name: postgres_private
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: private
+      POSTGRES_PASSWORD: testing123
+      POSTGRES_DB: private
+    volumes:
+      - postgres_private_data:/var/lib/postgresql/data
+      - postgres_private_backup:/backups
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    external: true
+    name: shared-network
 
 volumes:
-  postgres_data:
-  postgres_backup:
+  postgres_private_data:
+  postgres_private_backup:

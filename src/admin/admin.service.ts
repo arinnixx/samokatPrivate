@@ -1,18 +1,18 @@
 import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
-import { Aggregator } from '../entities/Aggregator';
+import { Admin } from '../entities/Admin';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, DeepPartial, Repository } from 'typeorm';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 import { BasePrivateService } from '../base/base-private.service';
-import { TokenService } from '../token/token.service';
 import * as bcrypt from 'bcrypt';
+import {TokenService} from "../token/token.service";
 
 @Injectable()
-export class AggregatorService extends BasePrivateService<Aggregator> {
-    name = 'aggregator';
+export class AdminService extends BasePrivateService<Admin> {
+    name = 'admin';
 
     constructor(
-        @InjectRepository(Aggregator) repo: Repository<Aggregator>,
+        @InjectRepository(Admin) repo: Repository<Admin>,
         dataSource: DataSource,
         rmqService: RabbitmqService,
         private tokenService: TokenService,
@@ -21,27 +21,27 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
     }
 
     /**
-     * Валидация агрегатора по логину и паролю
+     * Валидация админа по логину и паролю
      */
-    async validateAggregator(login: string, password: string): Promise<Aggregator | null> {
-        const aggregator = await this.repo.findOne({ where: { login } });
+    async validateAdmin(login: string, password: string): Promise<Admin | null> {
+        const admin = await this.repo.findOne({ where: { login } });
 
-        if (!aggregator) {
+        if (!admin) {
             return null;
         }
 
-        const isValid = await bcrypt.compare(password, aggregator.password);
+        const isValid = await bcrypt.compare(password, admin.password);
 
-        return isValid ? aggregator : null;
+        return isValid ? admin : null;
     }
 
     /**
-     * Логин агрегатора
+     * Логин админа
      */
-    async loginAggregator(login: string, password: string): Promise<{ aggregator: Aggregator; token: string }> {
-        const aggregator = await this.validateAggregator(login, password);
+    async loginAdmin(login: string, password: string): Promise<{ admin: Admin; token: string }> {
+        const admin = await this.validateAdmin(login, password);
 
-        if (!aggregator) {
+        if (!admin) {
             throw new UnauthorizedException('Неверный логин или пароль');
         }
 
@@ -49,38 +49,37 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
         const token = this.tokenService.generateToken();
 
         // Обновление токена в базе данных
-        await this.updateAggregatorToken(aggregator.id, token);
+        await this.updateAdminToken(admin.id, token);
 
         // Получаем обновленного агрегатора с токеном
-        const updatedAggregator = await this.repo.findOne({
-            where: { id: aggregator.id }
+        const updatedAdmin = await this.repo.findOne({
+            where: { id: admin.id }
         });
 
         return {
-            aggregator: updatedAggregator,
+            admin: updatedAdmin,
             token
         };
     }
 
     /**
-     * Выход агрегатора (очистка токена)
+     * Выход алмина (очистка токена)
      */
-    async logoutAggregator(aggregatorId: number): Promise<void> {
-        await this.repo.update(aggregatorId, { token: null });
+    async logoutAdmin(adminId: number): Promise<void> {
+        await this.repo.update(adminId, { token: null });
     }
 
     /**
-     * Создание нового агрегатора с логином и паролем
+     * Создание нового админ с логином и паролем
      */
-    async createAggregatorWithCredentials(data: {
-        name: string;
+    async createAdminWithCredentials(data: {
         login: string;
         password: string;
     }): Promise<number> {
-        const existAggregator = await this.repo.findOne({ where: { login: data.login } });
+        const existAdmin = await this.repo.findOne({ where: { login: data.login } });
 
-        if (existAggregator) {
-            throw new BadRequestException('Агрегатор с таким логином уже существует');
+        if (existAdmin) {
+            throw new BadRequestException('Админ с таким логином уже существует');
         }
 
         // Хешируем пароль
@@ -93,8 +92,7 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
         const { hash, salt: tokenSalt } = await this.tokenService.hashToken(token);
 
         // Создаем агрегатора
-        const aggregator = this.repo.create({
-            name: data.name,
+        const admin = this.repo.create({
             login: data.login,
             password: hashedPassword,
             salt: tokenSalt, // Используем tokenSalt для токена
@@ -103,35 +101,35 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
             token
         });
 
-        await this.repo.save(aggregator);
+        await this.repo.save(admin);
 
         // Отправляем в RabbitMQ
         await this.rmqService.publish({
-            id: aggregator.id,
+            id: admin.id,
             name: this.name,
             method: 'POST',
-            data: { ...aggregator },
+            data: { ...admin },
         });
 
-        return aggregator.id;
+        return admin.id;
     }
 
     /**
-     * Обновление токена агрегатора
+     * Обновление токена админа
      */
-    async updateAggregatorToken(aggregatorId: number, newToken: string): Promise<void> {
-        const aggregator = await this.repo.findOne({
-            where: { id: aggregatorId },
+    async updateAdminToken(adminId: number, newToken: string): Promise<void> {
+        const admin = await this.repo.findOne({
+            where: { id: adminId },
         });
 
-        if (!aggregator) {
-            throw new Error('Агрегатор не найден!');
+        if (!admin) {
+            throw new Error('Админ не найден!');
         }
 
         const lookupKey = this.tokenService.generateLookupKey(newToken);
         const { hash, salt } = await this.tokenService.hashToken(newToken);
 
-        await this.repo.update(aggregatorId, {
+        await this.repo.update(adminId, {
             lookupKey,
             tokenHash: hash,
             salt,
@@ -140,13 +138,12 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
     }
 
     /**
-     * Создаем нового агрегатора
+     * Создаем нового админа
      */
-    async createItem({ name, login, password }: DeepPartial<Aggregator>, isSendRmq = false): Promise<number> {
+    async createItem({login, password }: DeepPartial<Admin>, isSendRmq = false): Promise<number> {
         if (login && password) {
             // Если переданы логин и пароль, используем новый метод
-            return this.createAggregatorWithCredentials({
-                name: name as string,
+            return this.createAdminWithCredentials({
                 login: login as string,
                 password: password as string
             });
@@ -156,32 +153,31 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
         const lookupKey = this.tokenService.generateLookupKey(token);
         const { hash, salt } = await this.tokenService.hashToken(token);
 
-        const aggregator = this.repo.create({
-            name,
+        const admin = this.repo.create({
             lookupKey,
             tokenHash: hash,
             salt,
             token
         });
 
-        await this.repo.save(aggregator);
+        await this.repo.save(admin);
 
         if (isSendRmq) {
             await this.rmqService.publish({
-                id: aggregator.id,
+                id:admin.id,
                 name: this.name,
                 method: 'POST',
-                data: { ...aggregator },
+                data: { ...admin },
             });
         }
 
-        return aggregator.id;
+        return admin.id;
     }
 
     /**
-     * Удаление агрегатора
+     * Удаление админа
      */
-    async deleteAggregator(id: string): Promise<void> {
+    async deleteAdmin(id: string): Promise<void> {
         await this.repo.delete(id);
     }
 }

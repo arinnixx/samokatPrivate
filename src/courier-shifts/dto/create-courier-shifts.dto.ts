@@ -6,7 +6,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCourierShiftsDto extends CreateHandbookDto {
     @IsNotEmpty()
-    courier: Couriers;
+    couriers: Couriers;
 
     @IsNotEmpty()
     movement_type: Movement;

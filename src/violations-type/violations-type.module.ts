@@ -1,19 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ViolationsTypeService } from './violations-type.service';
-import { Couriers } from '../entities/Couriers';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RabbitmqModule } from '../rabbitmq/rabbitmq.module';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
-import { CouriersAggregator } from '../entities/CouriersAggregator';
-import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
+import { ViolationsType } from '../entities/ViolationType';
+import { ViolationsTypeController } from './violations-type.controller';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Couriers, CouriersAggregator]),
+        TypeOrmModule.forFeature([ViolationsType]),
         RabbitmqModule,
     ],
-    controllers: [],
-    providers: [ViolationsTypeService, RabbitmqService, CouriersAggregatorService],
+    controllers: [ViolationsTypeController],
+    providers: [ViolationsTypeService, RabbitmqService],
     exports: [ViolationsTypeService],
 })
 export class ViolationsTypeModule {

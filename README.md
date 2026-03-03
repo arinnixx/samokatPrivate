@@ -129,7 +129,6 @@ docker logs private
   - `couriers/` - модуль курьеров
   - `courier-shifts/` - модуль смен курьеров
   - `courier-violations/` - модуль нарушений курьеров
-  - `delivery-status-history/` - история статусов доставки
   - `entities/` - сущности базы данных
   - `rabbitmq/` - модуль для работы с RabbitMQ
   - `guard/` - guards для авторизации
@@ -141,4 +140,31 @@ docker logs private
 Приложение использует Bearer токен для авторизации административных операций. Установите заголовок:
 ```
 Authorization: Bearer <ADMIN_TOKEN>
+```
+
+Создание агрегатора
+```json
+{
+    "name": "aggregator",
+    "method": "POST",
+    "data": { "name":"Яндекс"}
+}
+```
+
+Создание статуса
+```json
+{
+    "name": "statuses",
+    "method": "POST",
+    "data": { "status_name":"Ожидание"}
+}
+```
+
+Создание типа нарушений
+```json
+{
+    "name": "violations-type",
+    "method": "POST",
+    "data": { "category":"ПДД", "code": "10.20"}
+}
 ```

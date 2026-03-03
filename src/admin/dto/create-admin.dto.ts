@@ -1,13 +1,9 @@
 import { IsString, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateAggregatorDto {
-    @ApiProperty({ example: 'New Aggregator', description: 'Название агрегатора' })
-    @IsString()
-    @IsNotEmpty({ message: 'Название не может быть пустым' })
-    name: string;
+export class CreateAdminDto {
 
-    @ApiProperty({ example: 'aggregator_login', description: 'Логин для входа', required: false })
+    @ApiProperty({ example: 'admin_login', description: 'Логин для входа', required: false })
     @IsString()
     @IsOptional()
     login?: string;

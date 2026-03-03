@@ -27,6 +27,10 @@ export class BasePrivateService<TEntity extends BaseEntity> {
         return item.id;
     }
 
+    async get() {
+        return await this.repo.find();
+    }
+
     async updateBy(where: any, data: DeepPartial<TEntity>, isSendRmq = false): Promise<boolean> {
         // @ts-ignore
         const item = await this.repo.update(where, data);

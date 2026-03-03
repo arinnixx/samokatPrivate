@@ -1,25 +1,25 @@
 import { Aggregator } from './Aggregator';
-import { StatusType } from './StatusType';
+import { Statuses } from './Statuses';
 import { Couriers } from './Couriers';
 import { CouriersAggregator } from './CouriersAggregator';
-import { DeliveryStatusHistory } from './deliveryStatusHistory';
 import { RequestLog } from './RequestLogs';
 import { Passport } from './Passport';
 import { DriverLicense } from './DriverLicense';
 import { CourierViolations } from './CourierViolations';
 import { ViolationsType } from './ViolationType';
 import { CourierShift } from './CourierShifts';
+import {Admin} from "./Admin";
 
 export default [
     Aggregator,
-    StatusType,
+    Statuses,
     Couriers,
     CouriersAggregator,
-    DeliveryStatusHistory,
     RequestLog,
     Passport,
     DriverLicense,
     CourierViolations,
     ViolationsType,
     CourierShift,
+    Admin,
 ];

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString, IsEmail, IsIn, Matches } from 'class-validator';
+import { IsEmail, IsIn, IsNotEmpty, IsOptional, IsString, Matches } from 'class-validator';
 
 class PassportDto {
     @IsNotEmpty()

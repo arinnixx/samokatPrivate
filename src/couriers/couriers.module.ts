@@ -10,14 +10,17 @@ import { Passport } from '../entities/Passport';
 import { DriverLicense } from '../entities/DriverLicense';
 import { PassportService } from '../passport/passport.service';
 import { DriverLicenseService } from '../driver-license/driverLicense.service';
+import { CouriersController } from './couriers.controller';
+import {TokenModule} from "../token/token.module";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Couriers, CouriersAggregator,Passport,DriverLicense]),
+        TypeOrmModule.forFeature([Couriers, CouriersAggregator, Passport, DriverLicense]),
         RabbitmqModule,
+        TokenModule,
     ],
-    controllers: [],
-    providers: [CouriersService, RabbitmqService, CouriersAggregatorService,PassportService,DriverLicenseService],
+    controllers: [CouriersController],
+    providers: [CouriersService, RabbitmqService, CouriersAggregatorService, PassportService, DriverLicenseService],
     exports: [CouriersService],
 })
 export class CouriersModule {

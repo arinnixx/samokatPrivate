@@ -1,8 +1,8 @@
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 
-@Entity({ name: 'status-type', comment: 'Статусы' })
-export class StatusType extends BaseEntity {
+@Entity({ name: 'statuses', comment: 'Статусы' })
+export class Statuses extends BaseEntity {
 
     @Column({ comment: 'Статус' })
     status_name: string;

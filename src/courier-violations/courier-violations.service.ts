@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { BaseService } from '../base/base.service';
-import { Couriers } from '../entities/Couriers';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, DeepPartial, Repository } from 'typeorm';
 import { Aggregator } from '../entities/Aggregator';
@@ -27,21 +26,21 @@ export class CourierViolationsService extends BaseService<CourierViolations> {
         return super.rebuildAggregator({ data });
     }
 
-    async createItem(data: DeepPartial<CourierViolations>, aggregator: Aggregator, {
-        repo,
-        manager,
-    }: Repositories<CourierViolations> = {}): Promise<CourierViolations> {
-        const item = await super.createItem(data, aggregator, {
-            repo,
-            manager,
-        });
-        await this.rmqService.publish({
-            id: item.id,
-            name: this.name,
-            method: 'POST',
-            data: item,
-        });
-        return item;
-    }
+    // async createItem(data: DeepPartial<CourierViolations>, aggregator: Aggregator, {
+    //     repo,
+    //     manager,
+    // }: Repositories<CourierViolations> = {}): Promise<CourierViolations> {
+    //     const item = await super.createItem(data, aggregator, {
+    //         repo,
+    //         manager,
+    //     });
+    //     await this.rmqService.publish({
+    //         id: item.id,
+    //         name: this.name,
+    //         method: 'POST',
+    //         data: item,
+    //     });
+    //     return item;
+    // }
 
 }

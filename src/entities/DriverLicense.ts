@@ -1,8 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 import { Couriers } from './Couriers';
 
-@Entity({ name: 'driverLicense', comment: 'Сотрудник' })
+@Entity({ name: 'driver_license', comment: 'Водительское удостоверение' })
 export class DriverLicense extends BaseEntity {
 
     @Column({ comment: 'Государство выдавшее ВУ' })

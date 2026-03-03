@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany} from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 import { Passport } from './Passport';
 import { DriverLicense } from './DriverLicense';
+import {CouriersAggregator} from "./CouriersAggregator";
 
 @Entity({ name: 'couriers', comment: 'Сотрудник' })
 export class Couriers extends BaseEntity {
@@ -15,10 +16,10 @@ export class Couriers extends BaseEntity {
     @Column({ comment: 'Отчество курьера', nullable: true })
     middleName: string;
 
-    @Column({ comment: 'Пол курьера' , nullable: true})
+    @Column({ comment: 'Пол курьера', nullable: true })
     gender: string;
 
-    @Column({ comment: 'Гражданство' , nullable: true})
+    @Column({ comment: 'Гражданство', nullable: true })
     citizenship: string;
 
     @Column({ comment: 'Номер телефона курьера' })
@@ -44,4 +45,6 @@ export class Couriers extends BaseEntity {
     @JoinColumn({ name: 'driverLicense_id' })
     driverLicense: DriverLicense;
 
+    @OneToMany(() => CouriersAggregator, (ca) => ca.couriers)
+    couriersAggregator: CouriersAggregator[];
 }

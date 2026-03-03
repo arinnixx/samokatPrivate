@@ -1,7 +1,7 @@
 import { DataSource, DeepPartial, EntityManager, FindOptionsOrder, FindOptionsRelationByString, FindOptionsWhere, Repository } from 'typeorm';
 import { QueryFindOptions } from './query-find-options.dto';
 import { BaseEntity } from './base.entity';
-import { SafeLog } from '../decorators/safe-http.decorator';
+import {SafeHttp, SafeLog} from '../decorators/safe-http.decorator';
 import { Repositories } from './dto/Repositories';
 import { Aggregator } from '../entities/Aggregator';
 
@@ -84,12 +84,13 @@ export class Transaction extends FindOptions {
     }
 }
 
-export class BaseService<TEntity extends BaseEntity> {
+export class BaseService<TEntity extends BaseEntity> extends FindOptions{
 
     constructor(
         protected readonly repo: Repository<TEntity>,
         protected readonly dataSource: DataSource,
-    ) {
+
+    ) { super();
     }
 
     rebuildAggregator({ aggregator, data, where }: { aggregator?: DeepPartial<Aggregator>, data?: DeepPartial<TEntity>, where?: FindOptionsWhere<TEntity> }) {
@@ -117,15 +118,15 @@ export class BaseService<TEntity extends BaseEntity> {
     }
 
     @SafeLog()
-    public async create( data: DeepPartial<TEntity>,aggregator: Aggregator) {
+    public async create(data: DeepPartial<TEntity>, aggregator: Aggregator) {
         return await this.wrapperTransaction<TEntity>(async (repo) => {
             // @ts-ignore
-            return await this.createItem( data, aggregator,{ repo });
+            return await this.createItem(data, aggregator, { repo });
         });
     }
 
     @SafeLog()
-    public async createItem( data: DeepPartial<TEntity>,aggregator: Aggregator, {
+    public async createItem(data: DeepPartial<TEntity>, aggregator: Aggregator, {
         repo,
         manager,
     }: Repositories<TEntity> = {}): Promise<TEntity> {
@@ -139,17 +140,17 @@ export class BaseService<TEntity extends BaseEntity> {
         return repoEntity;
     }
 
-    public async updateBy( where: FindOptionsWhere<TEntity> | any, data: DeepPartial<TEntity>,aggregator: Aggregator, checkField: DeepPartial<TEntity> = null) {
+    public async updateBy(where: FindOptionsWhere<TEntity> | any, data: DeepPartial<TEntity>, aggregator: Aggregator, checkField: DeepPartial<TEntity> = null) {
         const repoEntity: TEntity = await this.findOneBy(where);
         await this.wrapperTransaction(async (repo) => {
             // @ts-ignore
-            await this.updateItem( repoEntity.id, data,aggregator, { repo });
+            await this.updateItem(repoEntity.id, data, aggregator, { repo });
         });
         return true;
     }
 
     @SafeLog()
-    async updateItem( id: number, data: DeepPartial<TEntity> = null,aggregator: Aggregator, {
+    async updateItem(id: number, data: DeepPartial<TEntity> = null, aggregator: Aggregator, {
         repo,
         manager,
     }: Repositories<TEntity> = {}) {
@@ -164,7 +165,7 @@ export class BaseService<TEntity extends BaseEntity> {
     }
 
     @SafeLog()
-    async remove( id: number,aggregator: Aggregator, { repo, manager }: Repositories<TEntity> = {}) {
+    async remove(id: number, aggregator: Aggregator, { repo, manager }: Repositories<TEntity> = {}) {
         if (manager) {
             repo = manager.withRepository(this.repo);
         }
@@ -208,6 +209,19 @@ export class BaseService<TEntity extends BaseEntity> {
             where,
             relations,
         });
+    }
+    @SafeHttp()
+    async findList(query: QueryFindOptions) {
+        const findOptions = this.getFindOptions(query);
+        const [items, count] = await this.repo.findAndCount({
+            // relations: this.LOAD_RELATIONS,
+            ...findOptions,
+        });
+        return {
+            count,
+            offset: findOptions.take,
+            items,
+        };
     }
 }
 

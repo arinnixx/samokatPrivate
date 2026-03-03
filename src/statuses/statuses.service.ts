@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { DeliveryStatusHistory } from '../entities/deliveryStatusHistory';
+import { Statuses } from '../entities/Statuses';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { BasePrivateService } from '../base/base-private.service';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
+import { BasePrivateService } from '../base/base-private.service';
 
 @Injectable()
-export class DeliveryStatusHistoryService extends BasePrivateService<DeliveryStatusHistory> {
-    name = 'delivery-status-history';
+export class StatusesService extends BasePrivateService<Statuses> {
+    name = 'statuses';
 
     constructor(
-        @InjectRepository(DeliveryStatusHistory) repo: Repository<DeliveryStatusHistory>,
+        @InjectRepository(Statuses) repo: Repository<Statuses>,
         dataSource: DataSource,
         rmqService: RabbitmqService,
     ) {

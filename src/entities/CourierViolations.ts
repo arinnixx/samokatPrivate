@@ -3,7 +3,7 @@ import { BaseEntity } from '../base/base.entity';
 import { Couriers } from './Couriers';
 import { ViolationsType } from './ViolationType';
 
-@Entity({ name: 'courier_violations', comment: 'Агрегатор' })
+@Entity({ name: 'courier_violations', comment: 'Нарушения курьера' })
 export class CourierViolations extends BaseEntity {
 
     @ManyToOne(() => Couriers)
@@ -14,7 +14,7 @@ export class CourierViolations extends BaseEntity {
     violation_date: number;
 
     @ManyToOne(() => ViolationsType)
-    @JoinColumn({ name: 'violation_type' })
+    @JoinColumn({ name: 'violation_type_id' })
     violation_type: ViolationsType;
 
     @Column({ comment: 'Описание нарушения' })

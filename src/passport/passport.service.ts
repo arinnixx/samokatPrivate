@@ -25,21 +25,4 @@ export class PassportService extends BaseService<Passport> {
     }) {
         return super.rebuildAggregator({ data });
     }
-
-    async createItem( data: DeepPartial<Passport>,aggregator: Aggregator, {
-        repo,
-        manager,
-    }: Repositories<Passport> = {}): Promise<Passport> {
-        const item = await super.createItem( data, aggregator,{
-            repo,
-            manager,
-        });
-        await this.rmqService.publish({
-            id: item.id,
-            name: this.name,
-            method: 'POST',
-            data: item,
-        });
-        return item;
-    }
 }

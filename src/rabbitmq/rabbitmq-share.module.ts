@@ -3,14 +3,12 @@ import { RabbitmqService } from './rabbitmq.service';
 import { RabbitmqController } from './rabbitmq.controller';
 import { RabbitmqModule } from './rabbitmq.module';
 import { RequestLogsService } from '../request-logs/request-logs.service';
-import { DeliveryStatusHistoryService } from '../delivery-status-history/delivery-status-history.service';
-import { StatusTypeService } from '../status-type/status-type.service';
+import { StatusesService } from '../statuses/statuses.service';
 import { AggregatorService } from '../aggregator/aggregator.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CouriersAggregator } from '../entities/CouriersAggregator';
 import { Couriers } from '../entities/Couriers';
-import { DeliveryStatusHistory } from '../entities/deliveryStatusHistory';
-import { StatusType } from '../entities/StatusType';
+import { Statuses } from '../entities/Statuses';
 import { Aggregator } from '../entities/Aggregator';
 import { RequestLog } from '../entities/RequestLogs';
 import { CouriersAggregatorService } from '../couriers-aggregator/couriers-aggregator.service';
@@ -21,6 +19,13 @@ import { PassportService } from '../passport/passport.service';
 import { DriverLicenseService } from '../driver-license/driverLicense.service';
 import { ViolationsTypeService } from '../violations-type/violations-type.service';
 import { ViolationsType } from '../entities/ViolationType';
+import { TokenService } from '../token/token.service';
+import { CourierShiftsService } from '../courier-shifts/courier-shifts.service';
+import { CourierShift } from '../entities/CourierShifts';
+import { CourierViolationsService } from '../courier-violations/courier-violations.service';
+import { CourierViolations } from '../entities/CourierViolations';
+import { Admin} from "../entities/Admin";
+import {AdminService} from "../admin/admin.service";
 
 @Module({
     imports: [
@@ -28,13 +33,15 @@ import { ViolationsType } from '../entities/ViolationType';
         TypeOrmModule.forFeature([
             CouriersAggregator,
             Couriers,
-            StatusType,
-            DeliveryStatusHistory,
+            Statuses,
             Aggregator,
             RequestLog,
             Passport,
             DriverLicense,
-            ViolationsType
+            ViolationsType,
+            CourierShift,
+            CourierViolations,
+            Admin,
         ]),
     ],
     controllers: [RabbitmqController],
@@ -43,12 +50,15 @@ import { ViolationsType } from '../entities/ViolationType';
         RequestLogsService,
         CouriersAggregatorService,
         CouriersService,
-        DeliveryStatusHistoryService,
-        StatusTypeService,
+        StatusesService,
         AggregatorService,
         PassportService,
         DriverLicenseService,
-        ViolationsTypeService
+        ViolationsTypeService,
+        TokenService,
+        CourierShiftsService,
+        CourierViolationsService,
+        AdminService,
     ],
     exports: [RabbitmqService],
 })

@@ -2,15 +2,16 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AggregatorModule } from './aggregator/aggregator.module';
-import { StatusTypeModule } from './status-type/status-type.module';
+import { StatusesModule } from './statuses/statuses.module';
 import { RequestLogsModule } from './request-logs/request-logs.module';
-import { DeliveryStatusHistoryModule } from './delivery-status-history/delivery-status-history.module';
 import { ConfigModule } from '@nestjs/config';
 import entities from './entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RabbitmqShareModule } from './rabbitmq/rabbitmq-share.module';
 import { CouriersModule } from './couriers/couriers.module';
 import { CouriersAggregatorModule } from './couriers-aggregator/couriers-aggregator.module';
+import { AdminModule} from "./admin/admin.module";
+import { TokenModule } from './token/token.module';
 
 @Module({
     imports: [
@@ -31,11 +32,12 @@ import { CouriersAggregatorModule } from './couriers-aggregator/couriers-aggrega
         }),
         RabbitmqShareModule,
         AggregatorModule,
-        StatusTypeModule,
+        StatusesModule,
         CouriersModule,
         CouriersAggregatorModule,
         RequestLogsModule,
-        DeliveryStatusHistoryModule,
+        TokenModule,
+        AdminModule,
     ],
     controllers: [AppController],
     providers: [

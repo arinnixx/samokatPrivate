@@ -10,22 +10,22 @@ export enum Movement {
     elvelo = 'Электровело'
 }
 
-@Entity({ name: 'courier-shift', comment: 'заказы' })
+@Entity({ name: 'courier_shift', comment: 'Средства передвижения' })
 export class CourierShift extends BaseEntity {
 
     @ManyToOne(() => Couriers)
     @JoinColumn({ name: 'courier_id' })
-    courier: Couriers;
+    couriers: Couriers;
 
     @Column({ comment: 'Тип передвижения', type: 'enum', enum: Movement })
     movement_type: Movement;
 
-    @Column({ comment: 'номер тс' })
+    @Column({ comment: 'Номер ТС' })
     vehicle_number: string;
 
     @Column({ comment: 'Номер сумки' })
     bag_number: string;
 
-    @Column({ type: 'bigint', nullable: true, comment: 'Дата ' })
+    @Column({ type: 'bigint', nullable: true, comment: 'Дата' })
     closed_at: number;
 }
