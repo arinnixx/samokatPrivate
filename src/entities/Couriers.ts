@@ -3,6 +3,7 @@ import { BaseEntity } from '../base/base.entity';
 import { Passport } from './Passport';
 import { DriverLicense } from './DriverLicense';
 import {CouriersAggregator} from "./CouriersAggregator";
+import {Aggregator} from "./Aggregator";
 
 @Entity({ name: 'couriers', comment: 'Сотрудник' })
 export class Couriers extends BaseEntity {
@@ -25,8 +26,8 @@ export class Couriers extends BaseEntity {
     @Column({ comment: 'Номер телефона курьера' })
     phone: string;
 
-    @Column({ type: 'bigint', comment: 'Дата рождения курьера' })
-    birthDate: number;
+    @Column({ comment: 'Дата рождения курьера' })
+    birthDate: string;
 
     @Column({ comment: 'Почта', nullable: true })
     email: string;
@@ -37,9 +38,15 @@ export class Couriers extends BaseEntity {
     @Column({ comment: 'ИНН', nullable: true, unique: true })
     inn: string;
 
+    @Column({ name: 'passport_id', nullable: true })
+    passport_id: number;
+
     @ManyToOne(() => Passport)
     @JoinColumn({ name: 'passport_id' })
     passport: Passport;
+
+    @Column({ name: 'driverLicense_id', nullable: true })
+    driverLicense_id: number;
 
     @ManyToOne(() => DriverLicense)
     @JoinColumn({ name: 'driverLicense_id' })

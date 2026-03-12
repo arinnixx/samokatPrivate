@@ -9,6 +9,11 @@ import { CourierViolations } from './CourierViolations';
 import { ViolationsType } from './ViolationType';
 import { CourierShift } from './CourierShifts';
 import {Admin} from "./Admin";
+import {DeliveryBags} from "./DeliveryBags";
+import {Order} from "./Orders";
+import {Transport} from "./Transport";
+import {TransportType} from "./TransportTypes";
+import {DeliveryJackets} from "./DeliveryJackets";
 
 export default [
     Aggregator,
@@ -22,4 +27,9 @@ export default [
     ViolationsType,
     CourierShift,
     Admin,
+    DeliveryBags,
+    DeliveryJackets,
+    Order,
+    Transport,
+    TransportType
 ];

@@ -10,6 +10,11 @@ import { ViolationsTypeService } from '../violations-type/violations-type.servic
 import { CourierShiftsService } from '../courier-shifts/courier-shifts.service';
 import { CourierViolationsService } from '../courier-violations/courier-violations.service';
 import { AdminService} from "../admin/admin.service";
+import {TransportTypesService} from "../transport-types/transport-types.service";
+import {DeliveryBagsService} from "../delivery-bags/delivery-bags.service";
+import {DeliveryJacketsService} from "../delivery-jackets/delivery-jackets.service";
+import {OrdersService} from "../orders/orders.service";
+import {TransportService} from "../transport/transport.service";
 
 @Controller()
 @Injectable()
@@ -26,6 +31,11 @@ export class RabbitmqController {
         private courierShiftsService: CourierShiftsService,
         private courierViolationsService: CourierViolationsService,
         private adminService: AdminService,
+        private deliveryBagsService: DeliveryBagsService,
+        private deliveryJacketsService: DeliveryJacketsService,
+        private ordersService: OrdersService,
+        private transportService: TransportService,
+        private transportTypesService: TransportTypesService,
     ) {
         this.config['couriers-aggregator'] = this.couriersAggregatorService;
         this.config['couriers'] = this.couriersService;
@@ -35,6 +45,11 @@ export class RabbitmqController {
         this.config['courier-shifts'] = this.courierShiftsService;
         this.config['courier-violations'] = this.courierViolationsService;
         this.config['admin'] = this.adminService;
+        this.config['delivery-jackets'] = this.deliveryJacketsService;
+        this.config['delivery-bags'] = this.deliveryBagsService;
+        this.config['orders'] = this.ordersService;
+        this.config['transport-types'] = this.transportTypesService;
+        this.config['transport'] = this.transportService;
     }
 
     @RabbitSubscribe({
@@ -52,7 +67,7 @@ export class RabbitmqController {
         }
 
         const service = this.config[payload.name];
-        const adminRoute = ['statuses', 'aggregator', 'violations-type','admin'].includes(payload.name);
+        const adminRoute = ['statuses', 'aggregator', 'violations-type','admin', 'transport-types'].includes(payload.name);
 
         if (service) {
             switch (payload.method) {

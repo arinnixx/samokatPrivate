@@ -6,12 +6,18 @@ import { ViolationsType } from './ViolationType';
 @Entity({ name: 'courier_violations', comment: 'Нарушения курьера' })
 export class CourierViolations extends BaseEntity {
 
+    @Column({ name: 'courier_id', nullable: true })
+    courier_id: number;
+
     @ManyToOne(() => Couriers)
     @JoinColumn({ name: 'courier_id' })
     couriers: Couriers;
 
     @Column({ type: 'bigint', comment: 'Код' })
     violation_date: number;
+
+    @Column({ name: 'violation_type_id', nullable: true })
+    violation_type_id: number;
 
     @ManyToOne(() => ViolationsType)
     @JoinColumn({ name: 'violation_type_id' })

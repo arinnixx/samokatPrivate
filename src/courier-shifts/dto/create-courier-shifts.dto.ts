@@ -1,15 +1,15 @@
 import { CreateHandbookDto } from '../../base/dto/base.dto';
 import { IsNotEmpty } from 'class-validator';
 import { Couriers } from '../../entities/Couriers';
-import { Movement } from '../../entities/CourierShifts';
 import { ApiProperty } from '@nestjs/swagger';
+import {Transport} from "../../entities/Transport";
 
 export class CreateCourierShiftsDto extends CreateHandbookDto {
     @IsNotEmpty()
     couriers: Couriers;
 
     @IsNotEmpty()
-    movement_type: Movement;
+    transport: Transport;
 
     @IsNotEmpty()
     vehicle_number: string;
@@ -20,3 +20,4 @@ export class CreateCourierShiftsDto extends CreateHandbookDto {
     @ApiProperty()
     closed_at: number;
 }
+

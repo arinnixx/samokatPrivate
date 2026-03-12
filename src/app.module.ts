@@ -12,6 +12,17 @@ import { CouriersModule } from './couriers/couriers.module';
 import { CouriersAggregatorModule } from './couriers-aggregator/couriers-aggregator.module';
 import { AdminModule} from "./admin/admin.module";
 import { TokenModule } from './token/token.module';
+import {DriverLicenseModule} from "./driver-license/driverLicense.module";
+import {PassportModule} from "./passport/passport.module";
+import {CourierShiftsModule} from "./courier-shifts/courier-shifts.module";
+import {CourierViolationsModule} from "./courier-violations/courier-violations.module";
+import {ViolationsTypeModule} from "./violations-type/violations-type.module";
+import {DeliveryJacketsModule} from "./delivery-jackets/delivery-jackets.module";
+import {DeliveryBagsModule} from "./delivery-bags/delivery-bags.module";
+import {OrdersModule} from "./orders/orders.module";
+import {TransportModule} from "./transport/transport.module";
+import {TransportTypesModule} from "./transport-types/transport-types.module";
+
 
 @Module({
     imports: [
@@ -38,6 +49,16 @@ import { TokenModule } from './token/token.module';
         RequestLogsModule,
         TokenModule,
         AdminModule,
+        DriverLicenseModule,
+        PassportModule,
+        CourierShiftsModule,
+        CourierViolationsModule,
+        ViolationsTypeModule,
+        OrdersModule,
+        DeliveryBagsModule,
+        DeliveryJacketsModule,
+        TransportModule,
+        TransportTypesModule
     ],
     controllers: [AppController],
     providers: [

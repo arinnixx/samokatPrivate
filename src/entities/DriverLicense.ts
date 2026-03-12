@@ -23,6 +23,9 @@ export class DriverLicense extends BaseEntity {
     @Column({ comment: 'Год начала ВУ' })
     experience_startYear: string;
 
+    @Column({ name: 'couriers_id', nullable: true })
+    couriers_id: number;
+
     @ManyToOne(() => Couriers)
     @JoinColumn({ name: 'couriers_id' })
     couriers: Couriers;

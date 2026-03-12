@@ -1,24 +1,24 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 import { Couriers } from './Couriers';
-
-export enum Movement {
-    auto = 'Авто',
-    people = 'Пеший',
-    velo = 'Вело',
-    moto = 'Мото',
-    elvelo = 'Электровело'
-}
+import {Transport} from "./Transport";
 
 @Entity({ name: 'courier_shift', comment: 'Средства передвижения' })
 export class CourierShift extends BaseEntity {
+
+    @Column({ name: 'courier_id', nullable: true })
+    courier_id: number;
 
     @ManyToOne(() => Couriers)
     @JoinColumn({ name: 'courier_id' })
     couriers: Couriers;
 
-    @Column({ comment: 'Тип передвижения', type: 'enum', enum: Movement })
-    movement_type: Movement;
+    @Column({ name: 'transport_id', nullable: true })
+    transport_id: number;
+
+    @ManyToOne(() => Transport)
+    @JoinColumn({ name: 'transport_id' })
+    transport: Transport;
 
     @Column({ comment: 'Номер ТС' })
     vehicle_number: string;

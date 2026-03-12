@@ -1,4 +1,4 @@
-import {Controller, Get, HttpCode, HttpStatus, Param, Query} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import { BaseEntity } from './base.entity';
 import { BaseService } from './base.service';
@@ -6,7 +6,7 @@ import { GetCurrentAggregator } from '../decorators/getCurrentAggregator';
 import { Aggregator } from '../entities/Aggregator';
 import {SafeHttp} from "../decorators/safe-http.decorator";
 import {QueryFindOptions} from "./query-find-options.dto";
-import {Repository} from "typeorm";
+import {DeepPartial, Repository} from "typeorm";
 
 @ApiBearerAuth()
 @ApiTags('Base')
@@ -23,6 +23,16 @@ export class BaseController<
     @SafeHttp()
     async loadList(@Query() query: QueryFindOptions) {
         return this.service.findList(query);
+    }
+
+    @ApiResponse({ status: HttpStatus.CREATED })
+    @Post()
+    @HttpCode(HttpStatus.CREATED)
+    async create(
+        @Body() createDto: DeepPartial<TEntity>,
+        @GetCurrentAggregator() aggregator: Aggregator,
+    ): Promise<TEntity> {
+        return this.service.createItem(createDto, aggregator);
     }
 
 }

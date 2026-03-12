@@ -26,6 +26,16 @@ import { CourierViolationsService } from '../courier-violations/courier-violatio
 import { CourierViolations } from '../entities/CourierViolations';
 import { Admin} from "../entities/Admin";
 import {AdminService} from "../admin/admin.service";
+import {DeliveryBags} from "../entities/DeliveryBags";
+import {Order} from "../entities/Orders";
+import {Transport} from "../entities/Transport";
+import {TransportType} from "../entities/TransportTypes";
+import {DeliveryJacketsService} from "../delivery-jackets/delivery-jackets.service";
+import {DeliveryBagsService} from "../delivery-bags/delivery-bags.service";
+import {OrdersService} from "../orders/orders.service";
+import {TransportService} from "../transport/transport.service";
+import {TransportTypesService} from "../transport-types/transport-types.service";
+import {DeliveryJackets} from "../entities/DeliveryJackets";
 
 @Module({
     imports: [
@@ -42,6 +52,11 @@ import {AdminService} from "../admin/admin.service";
             CourierShift,
             CourierViolations,
             Admin,
+            DeliveryBags,
+            DeliveryJackets,
+            Order,
+            Transport,
+            TransportType,
         ]),
     ],
     controllers: [RabbitmqController],
@@ -59,6 +74,11 @@ import {AdminService} from "../admin/admin.service";
         CourierShiftsService,
         CourierViolationsService,
         AdminService,
+        DeliveryBagsService,
+        DeliveryJacketsService,
+        OrdersService,
+        TransportService,
+        TransportTypesService,
     ],
     exports: [RabbitmqService],
 })

@@ -26,7 +26,12 @@ export class Passport extends BaseEntity {
     @Column({ comment: 'Адрес фактическогo проживания' })
     residenceAddress: string;
 
+
+    @Column({ name: 'couriers_id', nullable: true })
+    couriers_id: number;
+
     @ManyToOne(() => Couriers)
     @JoinColumn({ name: 'couriers_id' })
     couriers: Couriers;
+
 }
