@@ -5,11 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, DeepPartial, Repository } from 'typeorm';
 import { Aggregator } from '../entities/Aggregator';
 import {CourierShift} from "../entities/CourierShifts";
-import {CourierViolations} from "../entities/CourierViolations";
 import {RabbitmqService} from "../rabbitmq/rabbitmq.service";
-import {DeliveryJackets} from "../entities/DeliveryJackets";
-import {OrdersController} from "./orders.controller";
-import {safeGetUnixTime} from "../utils/date";
+import {OrderHistory} from "../entities/OrderHistory";
 
 @Injectable()
 export class OrdersService extends BaseService<Order> {
@@ -17,6 +14,7 @@ export class OrdersService extends BaseService<Order> {
 
     constructor(
         @InjectRepository(Order) repo: Repository<Order>,
+        @InjectRepository(OrderHistory) private historyRepo: Repository<OrderHistory>,
         dataSource: DataSource,
         protected readonly rmqService: RabbitmqService,
     ) {
@@ -45,6 +43,72 @@ export class OrdersService extends BaseService<Order> {
         });
 
         return savedItem;
+    }
 
+    async updateBy(where: any, data: DeepPartial<Order>, aggregator: Aggregator, checkField = null): Promise<boolean> {
+        const existing = await this.findOneBy(where);
+        if (!existing) {
+            throw new Error('Order not found');
+        }
+
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try {
+            const history = this.historyRepo.create({
+                orderId: existing.id,
+                data: existing,
+                action: 'UPDATE',
+                changedAt: Math.floor(Date.now() / 1000),
+            });
+            await queryRunner.manager.save(history);
+
+            await queryRunner.manager.update(Order, existing.id, data);
+
+            await queryRunner.commitTransaction();
+            return true;
+        } catch (err) {
+            await queryRunner.rollbackTransaction();
+            throw err;
+        } finally {
+            await queryRunner.release();
+        }
+    }
+
+    async remove(id: number, aggregator: Aggregator): Promise<void> {
+        const existing = await this.findOneBy({ id });
+        if (!existing) return;
+
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try {
+            const history = this.historyRepo.create({
+                orderId: existing.id,
+                data: existing,
+                action: 'DELETE',
+                changedAt: Math.floor(Date.now() / 1000),
+            });
+            await queryRunner.manager.save(history);
+
+            const now = Math.floor(Date.now() / 1000);
+            await queryRunner.manager.update(Order, id, { deleted_at: now });
+
+            await queryRunner.commitTransaction();
+        } catch (err) {
+            await queryRunner.rollbackTransaction();
+            throw err;
+        } finally {
+            await queryRunner.release();
+        }
+    }
+
+    async getHistory(orderId: number): Promise<OrderHistory[]> {
+        return this.historyRepo.find({
+            where: { orderId },
+            order: { changedAt: 'DESC' }
+        });
     }
 }

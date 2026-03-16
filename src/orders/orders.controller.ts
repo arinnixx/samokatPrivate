@@ -1,4 +1,4 @@
-import {Body, Controller, Post, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, UseGuards} from '@nestjs/common';
 import { BaseController } from '../base/base.controller';
 import {OrdersService} from "./orders.service";
 import {Order} from "../entities/Orders";
@@ -24,5 +24,10 @@ export class OrdersController extends BaseController<OrdersService, Order> {
         @GetCurrentAggregator() aggregator: Aggregator,
     ): Promise<Order> {
         return await this.service.createItem(createDto, aggregator);
+    }
+
+    @Get(':id/history')
+    async getHistory(@Param('id') id: number) {
+        return this.service.getHistory(id);
     }
 }

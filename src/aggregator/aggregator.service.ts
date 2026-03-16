@@ -45,13 +45,10 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
             throw new UnauthorizedException('Неверный логин или пароль');
         }
 
-        // Генерация нового токена
         const token = this.tokenService.generateToken();
 
-        // Обновление токена в базе данных
         await this.updateAggregatorToken(aggregator.id, token);
 
-        // Получаем обновленного агрегатора с токеном
         const updatedAggregator = await this.repo.findOne({
             where: { id: aggregator.id }
         });
@@ -83,21 +80,18 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
             throw new BadRequestException('Агрегатор с таким логином уже существует');
         }
 
-        // Хешируем пароль
         const passwordSalt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(data.password, passwordSalt);
 
-        // Генерируем токен
         const token = this.tokenService.generateToken();
         const lookupKey = this.tokenService.generateLookupKey(token);
         const { hash, salt: tokenSalt } = await this.tokenService.hashToken(token);
 
-        // Создаем агрегатора
         const aggregator = this.repo.create({
             name: data.name,
             login: data.login,
             password: hashedPassword,
-            salt: tokenSalt, // Используем tokenSalt для токена
+            salt: tokenSalt,
             lookupKey,
             tokenHash: hash,
             token
@@ -105,7 +99,6 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
 
         await this.repo.save(aggregator);
 
-        // Отправляем в RabbitMQ
         await this.rmqService.publish({
             id: aggregator.id,
             name: this.name,
@@ -144,7 +137,6 @@ export class AggregatorService extends BasePrivateService<Aggregator> {
      */
     async createItem({ name, login, password }: DeepPartial<Aggregator>, isSendRmq = false): Promise<number> {
         if (login && password) {
-            // Если переданы логин и пароль, используем новый метод
             return this.createAggregatorWithCredentials({
                 name: name as string,
                 login: login as string,

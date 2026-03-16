@@ -36,6 +36,8 @@ import {OrdersService} from "../orders/orders.service";
 import {TransportService} from "../transport/transport.service";
 import {TransportTypesService} from "../transport-types/transport-types.service";
 import {DeliveryJackets} from "../entities/DeliveryJackets";
+import {CourierHistory} from "../entities/CourierHistory";
+import {OrderHistory} from "../entities/OrderHistory";
 
 @Module({
     imports: [
@@ -57,6 +59,8 @@ import {DeliveryJackets} from "../entities/DeliveryJackets";
             Order,
             Transport,
             TransportType,
+            CourierHistory,
+            OrderHistory
         ]),
     ],
     controllers: [RabbitmqController],

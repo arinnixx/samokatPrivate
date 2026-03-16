@@ -34,7 +34,6 @@ export class AuthGuard implements CanActivate {
             if (!aggregator) {
                 throw new UnauthorizedException();
             }
-            // Проверяем, что токен в БД соответствует переданному
             if (aggregator.token !== token) {
                 throw new UnauthorizedException('Токен был отозван или заменен');
             }

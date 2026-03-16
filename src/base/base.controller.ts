@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import { BaseEntity } from './base.entity';
 import { BaseService } from './base.service';
@@ -33,6 +33,23 @@ export class BaseController<
         @GetCurrentAggregator() aggregator: Aggregator,
     ): Promise<TEntity> {
         return this.service.createItem(createDto, aggregator);
+    }
+
+    @Patch(':id')
+    async update(
+        @Param('id') id: number,
+        @Body() updateDto: DeepPartial<TEntity>,
+        @GetCurrentAggregator() aggregator: Aggregator,
+    ): Promise<boolean> {
+        return await this.service.updateBy({ id }, updateDto, aggregator);
+    }
+
+    @Delete(':id')
+    async remove(
+        @Param('id') id: number,
+        @GetCurrentAggregator() aggregator: Aggregator,
+    ): Promise<void> {
+        return await this.service.remove(id, aggregator);
     }
 
 }

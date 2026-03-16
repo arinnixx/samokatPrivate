@@ -6,10 +6,11 @@ import { RabbitmqModule } from '../rabbitmq/rabbitmq.module';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 import {OrdersController} from "./orders.controller";
 import {TokenModule} from "../token/token.module";
+import {OrderHistory} from "../entities/OrderHistory";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Order]),
+        TypeOrmModule.forFeature([Order, OrderHistory]),
         RabbitmqModule,
         TokenModule,
     ],

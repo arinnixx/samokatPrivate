@@ -4,4 +4,8 @@ export class QueryFindOptions {
     where?: any;
     order?: any;
     relations?: string[];
+    offset?: string;
+    page?: string;
+    search?: string;
+    aggregatorId?: number;
 }

@@ -48,10 +48,8 @@ export class TokenService {
      * Проверка токена (оптимизированная версия)
      */
     async verifyToken(token: string): Promise<Aggregator | null> {
-        // 1. Генерируем lookup ключ
         const lookupKey = this.generateLookupKey(token);
 
-        // 2. Ищем по lookup ключу (один запрос в БД)
         const aggregator = await this.aggregatorRepository.findOne({
             where: {
                 lookupKey,
@@ -61,8 +59,6 @@ export class TokenService {
         if (!aggregator) {
             return null;
         }
-
-        // 3. Проверяем полный хэш токена
         const isValid = await bcrypt.compare(token, aggregator.tokenHash);
 
         if (isValid) {
@@ -76,10 +72,8 @@ export class TokenService {
      * Проверка токена (оптимизированная версия)
      */
     async verifyTokenAdmin(token: string): Promise<Admin | null> {
-        // 1. Генерируем lookup ключ
         const lookupKey = this.generateLookupKey(token);
 
-        // 2. Ищем по lookup ключу (один запрос в БД)
         const admin = await this.adminRepository.findOne({
             where: {
                 lookupKey,
@@ -90,7 +84,6 @@ export class TokenService {
             return null;
         }
 
-        // 3. Проверяем полный хэш токена
         const isValid = await bcrypt.compare(token, admin.tokenHash);
 
         if (isValid) {
@@ -112,7 +105,6 @@ export class TokenService {
             throw new Error('Aggregator not found');
         }
 
-        // Создаем новый
         const lookupKey = this.generateLookupKey(newToken);
         const { hash, salt } = await this.hashToken(newToken);
 

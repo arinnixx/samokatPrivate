@@ -14,7 +14,7 @@ export class DateInEntity {
     }
 
     @Exclude()
-    @DeleteDateColumn({ type: 'bigint', nullable: true, comment: 'Дата удаления' })
+    @Column({ type: 'bigint', nullable: true, comment: 'Дата удаления' })
     deleted_at: number;
 }
 

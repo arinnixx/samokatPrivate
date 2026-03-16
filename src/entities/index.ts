@@ -14,6 +14,9 @@ import {Order} from "./Orders";
 import {Transport} from "./Transport";
 import {TransportType} from "./TransportTypes";
 import {DeliveryJackets} from "./DeliveryJackets";
+import {CourierHistory} from "./CourierHistory";
+import {OrderHistory} from "./OrderHistory";
+
 
 export default [
     Aggregator,
@@ -31,5 +34,7 @@ export default [
     DeliveryJackets,
     Order,
     Transport,
-    TransportType
+    TransportType,
+    CourierHistory,
+    OrderHistory
 ];

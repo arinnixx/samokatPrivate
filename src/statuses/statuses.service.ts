@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Statuses } from '../entities/Statuses';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
-import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
+import { Repository, DataSource } from 'typeorm';
 import { BasePrivateService } from '../base/base-private.service';
+import { Statuses } from '../entities/Statuses';
+import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 
 @Injectable()
 export class StatusesService extends BasePrivateService<Statuses> {
@@ -12,8 +12,17 @@ export class StatusesService extends BasePrivateService<Statuses> {
     constructor(
         @InjectRepository(Statuses) repo: Repository<Statuses>,
         dataSource: DataSource,
-        rmqService: RabbitmqService,
+        protected readonly rmqService: RabbitmqService,
     ) {
         super(repo, dataSource, rmqService);
+    }
+
+    async createItem(data: any, isSendRmq = false): Promise<number> {
+        const transformedData = { ...data };
+        if (transformedData.name && !transformedData.status_name) {
+            transformedData.status_name = transformedData.name;
+            delete transformedData.name;
+        }
+        return super.createItem(transformedData, isSendRmq);
     }
 }

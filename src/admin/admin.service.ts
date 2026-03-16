@@ -45,13 +45,10 @@ export class AdminService extends BasePrivateService<Admin> {
             throw new UnauthorizedException('Неверный логин или пароль');
         }
 
-        // Генерация нового токена
         const token = this.tokenService.generateToken();
 
-        // Обновление токена в базе данных
         await this.updateAdminToken(admin.id, token);
 
-        // Получаем обновленного агрегатора с токеном
         const updatedAdmin = await this.repo.findOne({
             where: { id: admin.id }
         });
@@ -82,20 +79,17 @@ export class AdminService extends BasePrivateService<Admin> {
             throw new BadRequestException('Админ с таким логином уже существует');
         }
 
-        // Хешируем пароль
         const passwordSalt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(data.password, passwordSalt);
 
-        // Генерируем токен
         const token = this.tokenService.generateToken();
         const lookupKey = this.tokenService.generateLookupKey(token);
         const { hash, salt: tokenSalt } = await this.tokenService.hashToken(token);
 
-        // Создаем агрегатора
         const admin = this.repo.create({
             login: data.login,
             password: hashedPassword,
-            salt: tokenSalt, // Используем tokenSalt для токена
+            salt: tokenSalt,
             lookupKey,
             tokenHash: hash,
             token
@@ -103,7 +97,6 @@ export class AdminService extends BasePrivateService<Admin> {
 
         await this.repo.save(admin);
 
-        // Отправляем в RabbitMQ
         await this.rmqService.publish({
             id: admin.id,
             name: this.name,
@@ -142,7 +135,6 @@ export class AdminService extends BasePrivateService<Admin> {
      */
     async createItem({login, password }: DeepPartial<Admin>, isSendRmq = false): Promise<number> {
         if (login && password) {
-            // Если переданы логин и пароль, используем новый метод
             return this.createAdminWithCredentials({
                 login: login as string,
                 password: password as string

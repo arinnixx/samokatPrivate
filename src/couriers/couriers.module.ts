@@ -12,10 +12,11 @@ import { PassportService } from '../passport/passport.service';
 import { DriverLicenseService } from '../driver-license/driverLicense.service';
 import { CouriersController } from './couriers.controller';
 import {TokenModule} from "../token/token.module";
+import {CourierHistory} from "../entities/CourierHistory";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Couriers, CouriersAggregator, Passport, DriverLicense]),
+        TypeOrmModule.forFeature([Couriers, CouriersAggregator, Passport, DriverLicense, CourierHistory]),
         RabbitmqModule,
         TokenModule,
     ],
