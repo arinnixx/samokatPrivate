@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { BaseEntity } from './base.entity';
 import { BaseService } from './base.service';
@@ -34,4 +34,9 @@ export class BasePrivateController<
         return await this.service.createItem(createDto, true);
     }
 
+
+    @Delete(':id')
+    async remove(@Param('id') id: number) {
+        return this.service.remove(id, true);
+    }
 }

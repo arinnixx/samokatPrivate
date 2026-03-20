@@ -201,32 +201,32 @@ export class CouriersService extends BaseService<Couriers> {
             .getMany();
     }
 
-    async findWithFilters(query: QueryFindOptions, aggregatorId?: number) {
+    async findWithSearch(query: QueryFindOptions, aggregatorId?: number) {
         const qb = this.repo.createQueryBuilder('courier')
             .leftJoinAndSelect('courier.passport', 'passport')
             .leftJoinAndSelect('courier.driverLicense', 'driverLicense')
-            .leftJoin('courier.couriersAggregator', 'ca')
-            .where('courier.deleted_at IS NULL');
+            .innerJoin('courier.couriersAggregator', 'ca')
+            .where('courier.deleted_at IS NULL'); // исключаем удалённых
 
         if (aggregatorId) {
             qb.andWhere('ca.aggregator_id = :aggregatorId', { aggregatorId });
         }
 
-        if (query.search) {
-            const searchTerm = `%${query.search}%`;
+        if (query.search && query.search.trim()) {
+            const searchTerm = `%${query.search.trim()}%`;
             qb.andWhere(
                 `(courier.lastName ILIKE :search
-          OR courier.firstName ILIKE :search
-          OR courier.middleName ILIKE :search
-          OR courier.phone ILIKE :search
-          OR courier.email ILIKE :search
-          OR courier.snils ILIKE :search
-          OR courier.inn ILIKE :search
-          OR CAST(courier.id AS TEXT) ILIKE :search
-          OR passport.series ILIKE :search
-          OR passport.number ILIKE :search
-          OR driverLicense.series ILIKE :search
-          OR driverLicense.number ILIKE :search)`,
+              OR courier.firstName ILIKE :search
+              OR courier.middleName ILIKE :search
+              OR courier.phone ILIKE :search
+              OR courier.email ILIKE :search
+              OR courier.snils ILIKE :search
+              OR courier.inn ILIKE :search
+              OR CAST(courier.id AS TEXT) ILIKE :search
+              OR passport.series ILIKE :search
+              OR passport.number ILIKE :search
+              OR driverLicense.series ILIKE :search
+              OR driverLicense.number ILIKE :search)`,
                 { search: searchTerm }
             );
         }
@@ -243,4 +243,6 @@ export class CouriersService extends BaseService<Couriers> {
             items,
         };
     }
+
+
 }

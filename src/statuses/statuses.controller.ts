@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import {Controller, Delete, Get, Param} from '@nestjs/common';
 import {StatusesService} from "./statuses.service";
 import {Statuses} from "../entities/Statuses";
 import {BasePrivateController} from "../base/base-private.controller";
@@ -10,4 +10,10 @@ export class StatusesController extends BasePrivateController<StatusesService, S
     ) {
         super(service);
     }
+
+    @Get(':id/history')
+    async getHistory(@Param('id') id: number) {
+        return this.service.getHistory(id);
+    }
+
 }

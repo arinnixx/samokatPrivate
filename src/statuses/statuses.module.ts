@@ -5,10 +5,11 @@ import { Statuses } from '../entities/Statuses';
 import { RabbitmqModule } from '../rabbitmq/rabbitmq.module';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 import { StatusesController } from './statuses.controller';
+import {StatusesHistory} from "../entities/StatusesHistory";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Statuses]),
+        TypeOrmModule.forFeature([Statuses, StatusesHistory]),
         RabbitmqModule,
     ],
     controllers: [StatusesController],

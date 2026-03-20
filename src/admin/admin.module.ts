@@ -6,10 +6,11 @@ import { RabbitmqModule } from '../rabbitmq/rabbitmq.module';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 import { TokenModule } from '../token/token.module';
 import { AdminController } from './admin.controller';
+import {Aggregator} from "../entities/Aggregator";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Admin]),
+        TypeOrmModule.forFeature([Admin, Aggregator]),
         RabbitmqModule,
         TokenModule,
     ],

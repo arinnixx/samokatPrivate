@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import {Injectable, UnauthorizedException, BadRequestException, NotFoundException} from '@nestjs/common';
 import { Admin } from '../entities/Admin';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, DeepPartial, Repository } from 'typeorm';
@@ -6,6 +6,7 @@ import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 import { BasePrivateService } from '../base/base-private.service';
 import * as bcrypt from 'bcrypt';
 import {TokenService} from "../token/token.service";
+import {Aggregator} from "../entities/Aggregator";
 
 @Injectable()
 export class AdminService extends BasePrivateService<Admin> {
@@ -13,6 +14,7 @@ export class AdminService extends BasePrivateService<Admin> {
 
     constructor(
         @InjectRepository(Admin) repo: Repository<Admin>,
+        @InjectRepository(Aggregator) private aggregatorRepo: Repository<Aggregator>,
         dataSource: DataSource,
         rmqService: RabbitmqService,
         private tokenService: TokenService,
@@ -171,5 +173,29 @@ export class AdminService extends BasePrivateService<Admin> {
      */
     async deleteAdmin(id: string): Promise<void> {
         await this.repo.delete(id);
+    }
+
+    async resetAggregatorPassword(aggregatorId: number, newPassword: string): Promise<void> {
+        const aggregator = await this.aggregatorRepo.findOne({ where: { id: aggregatorId } });
+        if (!aggregator) {
+            throw new NotFoundException('Агрегатор не найден');
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        await this.aggregatorRepo.update(aggregatorId, {
+            password: hashedPassword,
+            token: null,
+        });
+    }
+
+    async setAggregatorBlockStatus(aggregatorId: number, isBlocked: boolean): Promise<void> {
+        const aggregator = await this.aggregatorRepo.findOne({ where: { id: aggregatorId } });
+        if (!aggregator) {
+            throw new NotFoundException('Агрегатор не найден');
+        }
+        aggregator.isBlocked = isBlocked;
+        await this.aggregatorRepo.save(aggregator);
     }
 }

@@ -25,4 +25,7 @@ export class Aggregator extends BaseEntity {
     @Column({ name: 'password'})
     password: string;
 
+    @Column({ name: 'is_blocked', default: false })
+    isBlocked: boolean;
+
 }

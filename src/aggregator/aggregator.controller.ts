@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req, HttpCode, HttpStatus, Patch } from '@nestjs/common';
+import {Controller, Post, Body, UseGuards, Req, HttpCode, HttpStatus, Patch, Param} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { BasePrivateController } from '../base/base-private.controller';
 import { Aggregator } from '../entities/Aggregator';
@@ -7,6 +7,7 @@ import { LoginDto } from './dto/login.dto';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { AuthGuard } from '../guard/auth.guard';
 import { GetCurrentAggregator } from '../decorators/getCurrentAggregator';
+import {AuthGuardAdmin} from "../guard/auth.guard.admin";
 
 
 @Controller('aggregator')
@@ -55,8 +56,6 @@ export class AggregatorController extends BasePrivateController<AggregatorServic
             }
         };
     }
-
-
 }
 
 

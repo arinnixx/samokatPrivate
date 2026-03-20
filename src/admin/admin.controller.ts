@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req, HttpCode, HttpStatus, Patch } from '@nestjs/common';
+import {Controller, Post, Body, UseGuards, Req, HttpCode, HttpStatus, Patch, Param} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { BasePrivateController } from '../base/base-private.controller';
 import { Admin } from '../entities/Admin';
@@ -7,6 +7,8 @@ import { LoginDto} from "./dto/login.dto";
 import { LoginResponseDto } from './dto/login-response.dto';
 import { AuthGuardAdmin} from "../guard/auth.guard.admin";
 import { GetCurrentAdmin } from '../decorators/getCurrentAdmin';
+import {ResetAggregatorPasswordDto} from "./dto/reset-aggregator-password.dto";
+import {ToggleBlockDto} from "./dto/toggle-block.dto";
 
 
 @Controller('admin')
@@ -54,7 +56,26 @@ export class AdminController extends BasePrivateController<AdminService, Admin> 
         };
     }
 
+    @Patch('aggregators/:id/reset-password')
+    @UseGuards(AuthGuardAdmin)
+    @ApiOperation({ summary: 'Сброс пароля агрегатора (только для админа)' })
+    @ApiResponse({ status: 200, description: 'Пароль успешно сброшен' })
+    @ApiResponse({ status: 404, description: 'Агрегатор не найден' })
+    async resetAggregatorPassword(
+        @Param('id') id: number,
+        @Body() dto: ResetAggregatorPasswordDto,
+    ) {
+        await this.service.resetAggregatorPassword(id, dto.newPassword);
+        return { message: 'Пароль агрегатора успешно изменён' };
+    }
 
+    @Patch('aggregators/:id/block')
+    @ApiOperation({ summary: 'Заблокировать/разблокировать агрегатора' })
+    @ApiResponse({ status: 200, description: 'Статус изменён' })
+    async toggleBlock(@Param('id') id: number, @Body() dto: ToggleBlockDto) {
+        await this.service.setAggregatorBlockStatus(id, dto.isBlocked);
+        return { message: dto.isBlocked ? 'Агрегатор заблокирован' : 'Агрегатор разблокирован' };
+    }
 }
 
 

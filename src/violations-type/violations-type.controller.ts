@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import {Controller, Delete, Get, Param} from '@nestjs/common';
 import {BasePrivateController} from "../base/base-private.controller";
 import {ViolationsTypeService} from "./violations-type.service";
 import {ViolationsType} from "../entities/ViolationType";
@@ -10,4 +10,10 @@ export class ViolationsTypeController extends BasePrivateController<ViolationsTy
     ) {
         super(service);
     }
+
+    @Get(':id/history')
+    async getHistory(@Param('id') id: number) {
+        return this.service.getHistory(id);
+    }
+
 }

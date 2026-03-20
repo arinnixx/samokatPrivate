@@ -5,10 +5,11 @@ import { RabbitmqModule } from '../rabbitmq/rabbitmq.module';
 import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
 import { ViolationsType } from '../entities/ViolationType';
 import { ViolationsTypeController } from './violations-type.controller';
+import {ViolationsTypeHistory} from "../entities/ViolationTypeHistory";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([ViolationsType]),
+        TypeOrmModule.forFeature([ViolationsType, ViolationsTypeHistory]),
         RabbitmqModule,
     ],
     controllers: [ViolationsTypeController],

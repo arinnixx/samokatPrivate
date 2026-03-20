@@ -16,6 +16,9 @@ import {TransportType} from "./TransportTypes";
 import {DeliveryJackets} from "./DeliveryJackets";
 import {CourierHistory} from "./CourierHistory";
 import {OrderHistory} from "./OrderHistory";
+import {ViolationsTypeHistory} from "./ViolationTypeHistory";
+import {StatusesHistory} from "./StatusesHistory";
+import {TransportTypeHistory} from "./TransportTypeHistory";
 
 
 export default [
@@ -36,5 +39,8 @@ export default [
     Transport,
     TransportType,
     CourierHistory,
-    OrderHistory
+    OrderHistory,
+    ViolationsTypeHistory,
+    StatusesHistory,
+    TransportTypeHistory
 ];

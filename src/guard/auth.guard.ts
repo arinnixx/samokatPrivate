@@ -34,6 +34,9 @@ export class AuthGuard implements CanActivate {
             if (!aggregator) {
                 throw new UnauthorizedException();
             }
+            if (aggregator.isBlocked) {
+                throw new UnauthorizedException('Ваш аккаунт заблокирован');
+            }
             if (aggregator.token !== token) {
                 throw new UnauthorizedException('Токен был отозван или заменен');
             }

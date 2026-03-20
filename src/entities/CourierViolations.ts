@@ -28,4 +28,8 @@ export class CourierViolations extends BaseEntity {
 
     @Column({ comment: 'Комментарий оператора' })
     operator_comment: string;
+
+    @Column({ type: 'jsonb', nullable: true, comment: 'Координаты нарушения' })
+    location: any;
+
 }
