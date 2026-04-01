@@ -22,6 +22,8 @@ import {DeliveryBagsModule} from "./delivery-bags/delivery-bags.module";
 import {OrdersModule} from "./orders/orders.module";
 import {TransportModule} from "./transport/transport.module";
 import {TransportTypesModule} from "./transport-types/transport-types.module";
+import {ObdiiModule} from "./obdii/obdii.module";
+import {TransportObdiiModule} from "./transport-obdii/transport-obdii.module";
 
 
 @Module({
@@ -58,7 +60,9 @@ import {TransportTypesModule} from "./transport-types/transport-types.module";
         DeliveryBagsModule,
         DeliveryJacketsModule,
         TransportModule,
-        TransportTypesModule
+        TransportTypesModule,
+        ObdiiModule,
+        TransportObdiiModule
     ],
     controllers: [AppController],
     providers: [

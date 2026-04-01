@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { TransportType } from './TransportTypes';
 import { Aggregator } from './Aggregator';
 import { BaseEntity } from '../base/base.entity';
+import {TransportObdii} from "./TransportObdii";
 
 
 @Entity({ name: 'transport', comment: 'Средства передвижения' })
@@ -26,4 +27,7 @@ export class Transport extends BaseEntity {
     @ManyToOne(() => Aggregator)
     @JoinColumn({ name: 'aggregator_id' })
     aggregator: Aggregator;
+
+    @OneToMany(() => TransportObdii, (transportObdii) => transportObdii.transport)
+    obdiiConnections: TransportObdii[];
 }

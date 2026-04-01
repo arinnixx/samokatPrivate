@@ -25,7 +25,7 @@ export class CreateOrderDto extends CreateHandbookDto {
     delivery_jackets: DeliveryJackets;
 
     @IsNotEmpty()
-    start_date: string;
+    start_date: any;
 
     @IsEmpty()
     end_date?: any;

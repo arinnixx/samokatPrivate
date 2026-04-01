@@ -19,6 +19,8 @@ import {OrderHistory} from "./OrderHistory";
 import {ViolationsTypeHistory} from "./ViolationTypeHistory";
 import {StatusesHistory} from "./StatusesHistory";
 import {TransportTypeHistory} from "./TransportTypeHistory";
+import {Obdii} from "./Obdii";
+import {TransportObdii} from "./TransportObdii";
 
 
 export default [
@@ -42,5 +44,7 @@ export default [
     OrderHistory,
     ViolationsTypeHistory,
     StatusesHistory,
-    TransportTypeHistory
+    TransportTypeHistory,
+    Obdii,
+    TransportObdii
 ];

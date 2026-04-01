@@ -7,6 +7,7 @@ import { BaseEntity } from '../base/base.entity';
 import {DeliveryBags} from "./DeliveryBags";
 import {DeliveryJackets} from "./DeliveryJackets";
 import {ApiProperty} from "@nestjs/swagger";
+import {Exclude} from "class-transformer";
 
 @Entity({ name: 'orders', comment: 'Заказы' })
 export class Order extends BaseEntity {
@@ -46,14 +47,15 @@ export class Order extends BaseEntity {
     @JoinColumn({ name: 'jacket_id' })
     delivery_jackets: DeliveryJackets;
 
-    @Column({comment: 'Дата начала' })
-    start_date:string;
+    @Column({ type: 'bigint', comment: 'Дата начала' })
+    start_date: number;
 
-    @Column({ name: 'end_date', nullable: true, comment: 'Дата окончания' })
-    end_date: string;
+    @Column({ type: 'bigint', nullable: true, comment: 'Дата окончания' })
+    end_date: number;
 
     @Column({ name: 'status_id', nullable: true })
     status_id: number;
+
 
     @ManyToOne(() => Statuses)
     @JoinColumn({ name: 'status_id' })

@@ -75,4 +75,10 @@ export const safeGetUnixTime = (dateString: string | undefined, format: string):
 export const timeZoneOffset = (new Date()).getTimezoneOffset() * 60;
 
 export const getDateFromTimestamp = (data, format = 'YYYY-MM-DD') => formatDateJS(data - timeZoneOffset, format);
-
+export const getMoscowUnixTime = (dateString: string): number | null => {
+    if (!dateString) return null;
+    // Предполагаем, что строка в формате "YYYY-MM-DDTHH:mm:ss" или подобном
+    const date = new Date(dateString + '+03:00'); // добавляем смещение +03:00
+    if (isNaN(date.getTime())) return null;
+    return Math.floor(date.getTime() / 1000);
+};

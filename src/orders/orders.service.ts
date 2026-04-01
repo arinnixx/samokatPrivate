@@ -7,6 +7,8 @@ import { Aggregator } from '../entities/Aggregator';
 import {CourierShift} from "../entities/CourierShifts";
 import {RabbitmqService} from "../rabbitmq/rabbitmq.service";
 import {OrderHistory} from "../entities/OrderHistory";
+import {getMoscowUnixTime, safeGetUnixTime} from "../utils/date";
+import {CreateOrderDto} from "./dto/create-order.dto";
 
 @Injectable()
 export class OrdersService extends BaseService<Order> {
@@ -28,12 +30,18 @@ export class OrdersService extends BaseService<Order> {
         return super.rebuildAggregator({ data });
     }
 
-    async createItem(data: Partial<Order>, aggregator: Aggregator): Promise<Order> {
-        const item = this.repo.create({
-            ...data,
-            aggregator: aggregator,
-        });
+    async createItem(data: CreateOrderDto, aggregator: Aggregator): Promise<Order> {
+        const startTimestamp = getMoscowUnixTime(data.start_date);
+        const endTimestamp = data.end_date ? getMoscowUnixTime(data.end_date) : null;
 
+        const orderData = {
+            ...data,
+            start_date: startTimestamp,
+            end_date: endTimestamp,
+            aggregator: aggregator,
+        };
+
+        const item = this.repo.create(orderData);
         const savedItem = await this.repo.save(item);
 
         await this.rmqService.publish({

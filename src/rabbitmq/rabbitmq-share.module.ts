@@ -41,6 +41,10 @@ import {OrderHistory} from "../entities/OrderHistory";
 import {ViolationsTypeHistory} from "../entities/ViolationTypeHistory";
 import {StatusesHistory} from "../entities/StatusesHistory";
 import {TransportTypeHistory} from "../entities/TransportTypeHistory";
+import {TransportObdii} from "../entities/TransportObdii";
+import {Obdii} from "../entities/Obdii";
+import {ObdiiService} from "../obdii/obdii.service";
+import {TransportObdiiService} from "../transport-obdii/transport-obdii.service";
 
 @Module({
     imports: [
@@ -66,7 +70,9 @@ import {TransportTypeHistory} from "../entities/TransportTypeHistory";
             OrderHistory,
             ViolationsTypeHistory,
             StatusesHistory,
-            TransportTypeHistory
+            TransportTypeHistory,
+            TransportObdii,
+            Obdii
         ]),
     ],
     controllers: [RabbitmqController],
@@ -89,6 +95,8 @@ import {TransportTypeHistory} from "../entities/TransportTypeHistory";
         OrdersService,
         TransportService,
         TransportTypesService,
+        ObdiiService,
+        TransportObdiiService
     ],
     exports: [RabbitmqService],
 })
